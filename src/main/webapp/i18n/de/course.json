@@ -1,0 +1,10 @@
+{
+    "gradingApp": {
+        "Course": {
+            "null": "",
+            "GSD": "GSD",
+            "AI": "AI",
+            "WIN": "WIN"
+        }
+    }
+}

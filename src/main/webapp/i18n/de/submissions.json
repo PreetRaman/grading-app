@@ -1,0 +1,27 @@
+{
+    "gradingApp": {
+        "submissions": {
+            "home": {
+                "title": "Submissions",
+                "createLabel": "Submissions erstellen",
+                "createOrEditLabel": "Submissions erstellen oder bearbeiten"
+            },
+            "created": "Submissions erstellt mit ID {{ param }}",
+            "updated": "Submissions aktualisiert mit ID {{ param }}",
+            "deleted": "Submissions gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Submissions {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Submissions"
+            },
+            "fdaiNumber": "Fdai Number",
+            "name": "Name",
+            "course": "Course",
+            "subject": "Subject",
+            "exercises": "Exercises",
+            "files": "Files",
+            "user": "User"
+        }
+    }
+}

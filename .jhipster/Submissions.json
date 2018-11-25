@@ -1,0 +1,50 @@
+{
+    "name": "Submissions",
+    "fields": [
+        {
+            "fieldName": "fdaiNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "course",
+            "fieldType": "Course",
+            "fieldValues": "GSD,AI,WIN"
+        },
+        {
+            "fieldName": "subject",
+            "fieldType": "Subject",
+            "fieldValues": "JAVA,Mlearning,Middleware"
+        },
+        {
+            "fieldName": "exercises",
+            "fieldType": "Exercise",
+            "fieldValues": "E1,E2,E3,E4,E5,E6"
+        },
+        {
+            "fieldName": "files",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20181124152151",
+    "entityTableName": "submissions",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.gradingapp",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "monolith",
+    "baseName": "gradingApp",
+    "packageName": "com.gradingapp",
+    "packageFolder": "com/gradingapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZGI2YTY1YzJjOTc0Mjk1N2E0Mjc5NWI3MmZjYTgyOTcxYzZkY2Q5ZTczMDM4ZDYyYTJmZTFmYTZmN2UwZWJkNGQ5NmVhZWZlNDVlNTFkMzZiYzFmZjNlNzVjYWM1ZWNhYzYxNmFkZDc0ZTM0ZDhmMzJjZDAwNzIxMWMyMjgzOTM=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "de"
+    ]
+  }
+}

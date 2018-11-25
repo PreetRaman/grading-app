@@ -1,0 +1,10 @@
+{
+    "gradingApp": {
+        "Subject": {
+            "null": "",
+            "JAVA": "JAVA",
+            "Mlearning": "Mlearning",
+            "Middleware": "Middleware"
+        }
+    }
+}

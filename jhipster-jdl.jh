@@ -1,0 +1,32 @@
+entity Submissions {
+	fdaiNumber String,
+    name String,
+    course Course,
+    subject Subject,
+    exercises Exercise,
+    files Blob
+}
+enum Course {
+	GSD,
+    AI,
+    WIN
+}
+
+enum Subject {
+	JAVA,
+    Mlearning,
+    Middleware
+}
+
+enum Exercise {
+	E1,
+    E2,
+    E3,
+    E4,
+    E5,
+    E6
+}
+
+relationship ManyToOne {
+    Submissions{user(login)} to User
+}

@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="submissions">
+            <h2><span jhiTranslate="gradingApp.submissions.detail.title">Submissions</span> {{submissions.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gradingApp.submissions.fdaiNumber">Fdai Number</span></dt>
+                <dd>
+                    <span>{{submissions.fdaiNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.submissions.name">Name</span></dt>
+                <dd>
+                    <span>{{submissions.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.submissions.course">Course</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'gradingApp.Course.' + submissions.course}}">{{submissions.course}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.submissions.subject">Subject</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'gradingApp.Subject.' + submissions.subject}}">{{submissions.subject}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.submissions.exercises">Exercises</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'gradingApp.Exercise.' + submissions.exercises}}">{{submissions.exercises}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.submissions.files">Files</span></dt>
+                <dd>
+                    <div *ngIf="submissions.files">
+                        <a (click)="openFile(submissions.filesContentType, submissions.files)" jhiTranslate="entity.action.open">open</a>
+                        {{submissions.filesContentType}}, {{byteSize(submissions.files)}}
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/submissions', submissions.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
