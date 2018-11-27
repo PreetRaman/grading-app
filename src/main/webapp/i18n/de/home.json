@@ -1,19 +1,9 @@
 {
     "home": {
-        "title": "Grading Application",
-        "subtitle": "Dies ist Ihre Hauptseite",
+        "title": "Grading Application[DE]",
+        "subtitle": "Dies ist ein Abschlussprojekt",
         "logged": {
-            "message": "Sie sind als Benutzer \"{{username}}\" angemeldet."
-        },
-        "question": "Wenn Sie Fragen zu JHipster haben:",
-        "link": {
-            "homepage": "JHipster Hauptseite",
-            "stackoverflow": "JHipster auf Stack Overflow",
-            "bugtracker": "JHipster Fehlereinträge",
-            "chat": "JHipster Chat",
-            "follow": "kontaktieren Sie uns mit @java_hipster auf Twitter"
-        },
-        "like": "Wenn Sie JHipster mögen, vergessen Sie nicht uns einen Stern zu geben auf",
-        "github": "GitHub"
+            "message": "Dies ist ein Abschlussprojekt, das die Entwicklung des Automated Grading Systems beschreibt. Das Hauptziel dieses Projekts ist es, die automatische Einstufung der Prüfungen zu ermöglichen, sobald die Schüler ihre Dateien in das System hochgeladen haben. Das Projekt wird mit Springboot realisiert. Das Frontend der Website ist in Angular gestaltet und das Backend wird mit Java entwickelt. Das Frontend ruft das Backend mit der REST-API auf. Zu Testzwecken wird die H2-Datenbank verwendet und für die Entwicklung und endgültige Implementierung wird die SQL-Datenbank verwendet."
+        }
     }
 }

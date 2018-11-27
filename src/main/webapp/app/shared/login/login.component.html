@@ -22,22 +22,9 @@
                     <input type="password" class="form-control" name="password" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
                            [(ngModel)]="password">
                 </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="rememberMe">
-                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
-                        <span jhiTranslate="login.form.rememberme">Remember me</span>
-                    </label>
-                </div>
                 <button type="submit" class="btn btn-primary" jhiTranslate="login.form.button">Sign in</button>
             </form>
             <p></p>
-            <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">Did you forget your password?</a>
-            </div>
-            <div class="alert alert-warning">
-                <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
-                <a class="alert-link" (click)="register()" jhiTranslate="global.messages.info.register.link">Register a new account</a>
-            </div>
         </div>
     </div>
 </div>
