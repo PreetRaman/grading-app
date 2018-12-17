@@ -8,7 +8,8 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Add submissions",
-                "submissions": "Submissions",
+                "submissions": "Upload Files",
+                "admin": "View submitted files",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -36,8 +37,8 @@
             "language": "Language"
         },
         "form": {
-            "username": "Username",
-            "username.placeholder": "Your username",
+            "username": "FD-Number ",
+            "username.placeholder": "Your FD-Number",
             "currentpassword": "Current password",
             "currentpassword.placeholder": "Current password",
             "newpassword": "New password",

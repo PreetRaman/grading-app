@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-6">
         <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
         <div class="alert alert-success" >
@@ -10,4 +10,35 @@
             <div class="alert alert-success" *ngSwitchCase="true">
                 <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"></span>
         </div>-->
+    </div>
+    <div [hidden]="isAuthenticated()" class="col-md-6" style="border:1px solid lightgrey;width: 100%;max-width: 500px;position: absolute;right: 200px;bottom: 12px;box-shadow: lightgrey">
+        <div class="modal-header justify-content-center">
+            <h4 class="modal-title" jhiTranslate="login.title" style="font-weight: 400">Sign in</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
+                        <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <form class="form" role="form" (ngSubmit)="login()">
+                        <div class="form-group">
+                            <label class="username-label" for="username" jhiTranslate="global.form.username">Login</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="{{'global.form.username.placeholder' | translate}}"
+                                   [(ngModel)]="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" jhiTranslate="login.form.password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
+                                   [(ngModel)]="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" jhiTranslate="login.form.button" style="color: white">Sign in</button>
+                    </form>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

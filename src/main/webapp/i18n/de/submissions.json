@@ -2,8 +2,8 @@
     "gradingApp": {
         "submissions": {
             "home": {
-                "title": "Submissions",
-                "createLabel": "Submissions erstellen",
+                "title": "Add new file[DE]",
+                "createLabel": "Neue Datei hochladen",
                 "createOrEditLabel": "Submissions erstellen oder bearbeiten"
             },
             "created": "Submissions erstellt mit ID {{ param }}",
@@ -21,7 +21,10 @@
             "subject": "Subject",
             "exercises": "Exercises",
             "files": "Files",
-            "user": "User"
+            "user": "User",
+            "table": {
+                "title": "Submitted files"
+            }
         }
     }
 }
