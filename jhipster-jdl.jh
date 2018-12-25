@@ -5,6 +5,7 @@ entity Submissions {
     subject Subject,
     exercises Exercise,
     files Blob
+    user User
 }
 enum Course {
 	GSD,
@@ -27,6 +28,15 @@ enum Exercise {
     E6
 }
 
+entity FdaiNummer {
+	fdainumber String,
+    ip Integer,
+}
+
 relationship ManyToOne {
     Submissions{user(login)} to User
+}
+
+relationship ManyToOne {
+	FdaiNummer{user(login)} to User,
 }
