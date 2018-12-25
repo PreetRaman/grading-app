@@ -5,7 +5,6 @@ entity Submissions {
     subject Subject,
     exercises Exercise,
     files Blob
-    user User
 }
 enum Course {
 	GSD,
@@ -38,5 +37,5 @@ relationship ManyToOne {
 }
 
 relationship ManyToOne {
-	FdaiNummer{user(login)} to User,
+	FdaiNummer{user(login)} to User
 }
