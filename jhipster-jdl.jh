@@ -29,7 +29,7 @@ enum Exercise {
 
 entity FdaiNummer {
 	fdainumber String,
-    ip Integer,
+    ip String,
 }
 
 relationship ManyToOne {

@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="fdaiNummer">
+            <h2><span jhiTranslate="gradingApp.fdaiNummer.detail.title">Fdai Nummer</span> {{fdaiNummer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gradingApp.fdaiNummer.fdainumber">Fdainumber</span></dt>
+                <dd>
+                    <span>{{fdaiNummer.fdainumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.fdaiNummer.ip">Ip</span></dt>
+                <dd>
+                    <span>{{fdaiNummer.ip}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.fdaiNummer.user">User</span></dt>
+                <dd>
+                    {{fdaiNummer.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/fdai-nummer', fdaiNummer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+    "gradingApp": {
+        "fdaiNummer": {
+            "home": {
+                "title": "Fdai Nummers",
+                "createLabel": "Create a new Fdai Nummer",
+                "createOrEditLabel": "Create or edit a Fdai Nummer"
+            },
+            "created": "A new Fdai Nummer is created with identifier {{ param }}",
+            "updated": "A Fdai Nummer is updated with identifier {{ param }}",
+            "deleted": "A Fdai Nummer is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Fdai Nummer {{ id }}?"
+            },
+            "detail": {
+                "title": "Fdai Nummer"
+            },
+            "fdainumber": "Fdainumber",
+            "ip": "Ip",
+            "user": "User"
+        }
+    }
+}
