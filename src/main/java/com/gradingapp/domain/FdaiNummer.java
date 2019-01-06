@@ -27,7 +27,7 @@ public class FdaiNummer implements Serializable {
     private String fdainumber;
 
     @Column(name = "ip")
-    private Integer ip;
+    private String ip;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -55,16 +55,16 @@ public class FdaiNummer implements Serializable {
         this.fdainumber = fdainumber;
     }
 
-    public Integer getIp() {
+    public String getIp() {
         return ip;
     }
 
-    public FdaiNummer ip(Integer ip) {
+    public FdaiNummer ip(String ip) {
         this.ip = ip;
         return this;
     }
 
-    public void setIp(Integer ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
 
@@ -107,7 +107,7 @@ public class FdaiNummer implements Serializable {
         return "FdaiNummer{" +
             "id=" + getId() +
             ", fdainumber='" + getFdainumber() + "'" +
-            ", ip=" + getIp() +
+            ", ip='" + getIp() + "'" +
             "}";
     }
 }

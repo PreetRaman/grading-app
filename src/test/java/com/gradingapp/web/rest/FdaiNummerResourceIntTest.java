@@ -42,8 +42,8 @@ public class FdaiNummerResourceIntTest {
     private static final String DEFAULT_FDAINUMBER = "AAAAAAAAAA";
     private static final String UPDATED_FDAINUMBER = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_IP = 1;
-    private static final Integer UPDATED_IP = 2;
+    private static final String DEFAULT_IP = "AAAAAAAAAA";
+    private static final String UPDATED_IP = "BBBBBBBBBB";
 
     @Autowired
     private FdaiNummerRepository fdaiNummerRepository;
@@ -143,7 +143,7 @@ public class FdaiNummerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(fdaiNummer.getId().intValue())))
             .andExpect(jsonPath("$.[*].fdainumber").value(hasItem(DEFAULT_FDAINUMBER.toString())))
-            .andExpect(jsonPath("$.[*].ip").value(hasItem(DEFAULT_IP)));
+            .andExpect(jsonPath("$.[*].ip").value(hasItem(DEFAULT_IP.toString())));
     }
     
     @Test
@@ -158,7 +158,7 @@ public class FdaiNummerResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(fdaiNummer.getId().intValue()))
             .andExpect(jsonPath("$.fdainumber").value(DEFAULT_FDAINUMBER.toString()))
-            .andExpect(jsonPath("$.ip").value(DEFAULT_IP));
+            .andExpect(jsonPath("$.ip").value(DEFAULT_IP.toString()));
     }
 
     @Test

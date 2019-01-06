@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(FdaiNummerService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new FdaiNummer(0, 'AAAAAAA', 0);
+            elemDefault = new FdaiNummer(0, 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -56,7 +56,7 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         fdainumber: 'BBBBBB',
-                        ip: 1
+                        ip: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -74,7 +74,7 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         fdainumber: 'BBBBBB',
-                        ip: 1
+                        ip: 'BBBBBB'
                     },
                     elemDefault
                 );

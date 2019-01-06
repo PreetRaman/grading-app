@@ -7,7 +7,7 @@
         },
         {
             "fieldName": "ip",
-            "fieldType": "Integer"
+            "fieldType": "String"
         }
     ],
     "relationships": [

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,33 +53,6 @@ public class FdaiNummerResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-
-
-    /**
-     * POST  /fdai-nummers : Create a new fdaiNummer.
-     *
-     * @param fdaiNummerList the fdaiNummer to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new fdaiNummer, or with status 400 (Bad Request) if the fdaiNummer has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/fdai-nummers-list")
-    @Timed
-    public ResponseEntity<List<FdaiNummer>> createFdaiNummerList(@RequestBody List<FdaiNummer> fdaiNummerList) throws URISyntaxException {
-        log.debug("REST request to save FdaiNummer : {}", fdaiNummerList);
-        if (fdaiNummerList.get(0) != null) {
-            throw new BadRequestAlertException("A new fdaiNummer cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        List<FdaiNummer> resultList = new ArrayList<FdaiNummer>();
-        for (FdaiNummer fdaiNummer:fdaiNummerList ) {
-            FdaiNummer result = fdaiNummerRepository.save(fdaiNummer);
-            resultList.add(result);
-        }
-
-        return ResponseEntity.created(new URI("/api/fdai-nummers/" ))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, resultList.get(0).getId().toString()))
-            .body(resultList);
-    }
-
 
     /**
      * PUT  /fdai-nummers : Updates an existing fdaiNummer.

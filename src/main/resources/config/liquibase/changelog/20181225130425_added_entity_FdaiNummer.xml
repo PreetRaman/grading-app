@@ -26,7 +26,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="ip" type="integer">
+            <column name="ip" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
