@@ -21,6 +21,7 @@
             "subject": "Subject",
             "exercises": "Exercises",
             "files": "Files",
+            "print": "Print PDF",
             "user": "User",
             "table": {
                 "title": "Submitted files"

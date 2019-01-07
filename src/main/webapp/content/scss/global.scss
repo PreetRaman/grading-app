@@ -85,6 +85,9 @@ Generic styles
 
 .footer {
     border-top: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: #f4f8fa !important;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .hand,
@@ -223,4 +226,25 @@ ui bootstrap tweaks
     white-space: nowrap;
 }
 
+.btn-primary {
+    color: white;
+}
+
+.upload__button {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+#table-heading {
+    margin-bottom: 10px;
+}
+
+.table-striped {
+    margin-top:10px;
+}
+
+.footer_content {
+    margin-top: 10px;
+    margin-left: 20px;
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */

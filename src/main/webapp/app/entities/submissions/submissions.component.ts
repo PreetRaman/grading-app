@@ -57,6 +57,10 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
         return this.dataUtils.openFile(contentType, field);
     }
 
+    printPDF() {
+        console.log('Hello PDF');
+    }
+
     registerChangeInSubmissions() {
         this.eventSubscriber = this.eventManager.subscribe('submissionsListModification', response => this.loadAll());
     }

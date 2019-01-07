@@ -11,7 +11,8 @@
                 "submissions": "Upload Files",
                 "admin": "View submitted files",
                 "fdaiNummer": "Fdai Nummer",
-                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+                "fdainummer":"Enter Fdai Numbers"
             },
             "account": {
                 "main": "Account",
@@ -138,5 +139,5 @@
         "exerciseexists": "Already submitted this exercise",
         "idnull": "Invalid ID"
     },
-    "footer": "This is your footer"
+    "footer": "© This is a thesis project"
 }

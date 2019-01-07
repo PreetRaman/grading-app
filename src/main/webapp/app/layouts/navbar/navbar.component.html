@@ -25,10 +25,16 @@
                     <span jhiTranslate="global.menu.entities.admin">Submissions</span>
                 </a>
             </li>
-            <li *jhiHasAnyAuthority="!'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *jhiHasNoAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="submissions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                     <fa-icon icon="upload" fixedWidth="true"></fa-icon>
                     <span jhiTranslate="global.menu.entities.submissions">Submissions</span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="fda i-nummer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <fa-icon icon="plus" fixedWidth="true"></fa-icon>
+                    <span jhiTranslate="global.menu.entities.fdainummer">Enter Fdai Numbers</span>
                 </a>
             </li>
             <li  *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

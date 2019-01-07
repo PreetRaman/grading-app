@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
         <div class="alert alert-success" >
@@ -11,7 +11,7 @@
                 <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"></span>
         </div>-->
     </div>
-    <div [hidden]="isAuthenticated()" class="col-md-6" style="border:1px solid lightgrey;width: 100%;max-width: 500px;position: absolute;right: 200px;bottom: 12px;box-shadow: lightgrey">
+    <div [hidden]="isAuthenticated()" class="col-md-4">
         <div class="modal-header justify-content-center">
             <h4 class="modal-title" jhiTranslate="login.title" style="font-weight: 400">Sign in</h4>
         </div>

@@ -11,7 +11,8 @@
                 "submissions": "Daten hochladen",
                 "admin": "View submitted files",
                 "fdaiNummer": "Fdai Nummer",
-                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+                "fdainummer":"Geben Sie die Fdai Nummer ein"
             },
             "account": {
                 "main": "Zugang",
@@ -137,5 +138,5 @@
         "exerciseexists": "Exercise sochn",
         "idnull": "Ungültige ID"
     },
-    "footer": "Dies ist Ihre Fußzeile"
+    "footer": "© Dies ist ein Abschlussprojekt"
 }

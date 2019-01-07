@@ -3,7 +3,7 @@
         "fdaiNummer": {
             "home": {
                 "title": "Fdai Nummers",
-                "createLabel": "Fdai Nummer erstellen",
+                "createLabel": "Geben Sie eine neue Fdai-Nummer ein",
                 "createOrEditLabel": "Fdai Nummer erstellen oder bearbeiten"
             },
             "created": "Fdai Nummer erstellt mit ID {{ param }}",

@@ -1,3 +1,43 @@
+<div *jhiHasAnyAuthority="'ROLE_LADMIN'">
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="submissions">
+        <h2 id="table-heading">
+            <span jhiTranslate="gradingApp.submissions.table.title"></span>
+        </h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span jhiTranslate="global.field.id">ID</span></th>
+                <th><span jhiTranslate="gradingApp.submissions.fdaiNumber">Fdai Number</span></th>
+                <th><span jhiTranslate="gradingApp.submissions.name">Name</span></th>
+                <th><span jhiTranslate="gradingApp.submissions.files">Files</span></th>
+                <th><span jhiTranslate="gradingApp.submissions.print">Files</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let submissions of submissions ;trackBy: trackId">
+                <td><a [routerLink]="['/submissions', submissions.id, 'view' ]">{{submissions.id}}</a></td>
+                <td>{{submissions.fdaiNumber}}</td>
+                <td>{{submissions.name}}</td>
+                <td>
+                    <a *ngIf="submissions.files" (click)="openFile(submissions.filesContentType, submissions.files)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="submissions.files">{{submissions.filesContentType}}, {{byteSize(submissions.files)}}</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" style="color: white" (click)="printPDF()">
+                        <fa-icon [icon]="'file-pdf'"></fa-icon>
+                        <span  jhiTranslate="gradingApp.submissions.print"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 <div>
     <h2 id="page-heading">
        <span jhiTranslate="gradingApp.submissions.home.title">Submissions</span>
@@ -5,16 +45,16 @@
     <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="submissions">
-        <div style="display: flex; margin-bottom: 50px;">
+        <div class="upload__button">
             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-submissions" [routerLink]="['/submissions/new']" style="color: white">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span  jhiTranslate="gradingApp.submissions.home.createLabel"></span>
             </button>
         </div>
-        <h2 id="table-heading" style="margin-bottom: 10px;">
+        <h2 id="table-heading">
             <span jhiTranslate="gradingApp.submissions.table.title"></span>
         </h2>
-        <table class="table table-striped" style="margin-top: 10px;">
+        <table class="table table-striped">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
@@ -47,7 +87,7 @@
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
-                        <button type="submit" style="color: white"
+                        <button type="submit"
                                 [routerLink]="['/submissions', submissions.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
