@@ -26,7 +26,7 @@
                     <span *ngIf="submissions.files">{{submissions.filesContentType}}, {{byteSize(submissions.files)}}</span>
                 </td>
                 <td>
-                    <button class="btn btn-primary" style="color: white" (click)="printPDF()">
+                    <button class="btn btn-primary" style="color: white" (click)="openFile(submissions.filesContentType, submissions.files)">
                         <fa-icon [icon]="'file-pdf'"></fa-icon>
                         <span  jhiTranslate="gradingApp.submissions.print"></span>
                     </button>
