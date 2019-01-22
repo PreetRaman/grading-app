@@ -4,7 +4,9 @@
             "home": {
                 "title": "Add new file",
                 "createLabel": "Upload new file",
-                "createOrEditLabel": "Create or edit a Submissions"
+                "createOrEditLabel": "Create or edit a Submissions",
+                "clearData": "Clear Data",
+                "importCsv": "Export CSV"
             },
             "created": "A new Submissions is created with identifier {{ param }}",
             "updated": "A Submissions is updated with identifier {{ param }}",

@@ -20,7 +20,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-
 /**
  * REST controller for managing Submissions.
  */
@@ -106,7 +105,7 @@ public class SubmissionsResource {
     @Timed
     public List<Submissions> getAllSubmissions() {
         log.debug("REST request to get all Submissions");
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) || SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.LADMIN)) {
             return submissionsRepository.findAll();
         } else
             return submissionsRepository.findByUserIsCurrentUser();
@@ -139,5 +138,14 @@ public class SubmissionsResource {
 
         submissionsRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @DeleteMapping("/submissions")
+    @Timed
+    public ResponseEntity<Void> deleteAllSubmissions() {
+        log.debug("REST request to delete Submissions : {}");
+
+        submissionsRepository.deleteAll();
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("All data deleted", null)).build();
     }
 }

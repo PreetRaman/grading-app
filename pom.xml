@@ -353,6 +353,7 @@
             <artifactId>spring-security-data</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <!-- For creating excel sheets-->
     </dependencies>
 
     <build>

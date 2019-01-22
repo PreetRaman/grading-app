@@ -41,6 +41,10 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
         this.registerChangeInSubmissions();
     }
 
+    isLadmin(): boolean {
+        return this.principal.userIdentity.authorities.indexOf('ROLE_LADMIN') > -1;
+    }
+
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
@@ -59,6 +63,11 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
 
     printPDF() {
         console.log('Hello PDF');
+    }
+
+    clearData() {
+        this.submissionsService.deleteAll();
+        console.log('I m called ');
     }
 
     registerChangeInSubmissions() {

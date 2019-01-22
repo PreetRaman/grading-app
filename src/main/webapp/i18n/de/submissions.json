@@ -4,7 +4,9 @@
             "home": {
                 "title": "Add new file[DE]",
                 "createLabel": "Neue Datei hochladen",
-                "createOrEditLabel": "Submissions erstellen oder bearbeiten"
+                "createOrEditLabel": "Submissions erstellen oder bearbeiten",
+                "clearData": "Daten löschen",
+                "importCsv": "CSV exportieren"
             },
             "created": "Submissions erstellt mit ID {{ param }}",
             "updated": "Submissions aktualisiert mit ID {{ param }}",
