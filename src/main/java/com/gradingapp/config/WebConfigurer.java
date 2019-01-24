@@ -3,7 +3,6 @@ package com.gradingapp.config;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
 import com.codahale.metrics.servlets.MetricsServlet;
-import com.gradingapp.web.rest.util.ActiveUserStore;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.h2.H2ConfigurationHelper;
@@ -46,11 +45,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     private final JHipsterProperties jHipsterProperties;
 
     private MetricRegistry metricRegistry;
-
-    @Bean
-    public ActiveUserStore activeUserStore(){
-        return new ActiveUserStore();
-    }
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
 

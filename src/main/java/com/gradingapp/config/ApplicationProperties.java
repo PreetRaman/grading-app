@@ -1,8 +1,6 @@
 package com.gradingapp.config;
 
-import com.gradingapp.web.rest.util.ActiveUserStore;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 
 /**
  * Properties specific to Grading App.

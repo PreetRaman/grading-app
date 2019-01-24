@@ -10,8 +10,6 @@ import com.gradingapp.service.UserService;
 import com.gradingapp.service.dto.PasswordChangeDTO;
 import com.gradingapp.service.dto.UserDTO;
 import com.gradingapp.web.rest.errors.*;
-import com.gradingapp.web.rest.util.ActiveUserStore;
-import com.gradingapp.web.rest.util.LoggedUser;
 import com.gradingapp.web.rest.vm.KeyAndPasswordVM;
 import com.gradingapp.web.rest.vm.ManagedUserVM;
 
@@ -42,9 +40,7 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public  ActiveUserStore activeUserStore;
-
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService,  ActiveUserStore activeUserStore) {
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -96,11 +92,6 @@ public class AccountResource {
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
          String username = request.getRemoteUser();
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            LoggedUser user = new LoggedUser(username, activeUserStore);
-            session.setAttribute("user", user);
-        }
          return username;
     }
 

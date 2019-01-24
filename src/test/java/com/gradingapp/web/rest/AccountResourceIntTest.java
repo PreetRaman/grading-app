@@ -12,7 +12,6 @@ import com.gradingapp.service.UserService;
 import com.gradingapp.service.dto.PasswordChangeDTO;
 import com.gradingapp.service.dto.UserDTO;
 import com.gradingapp.web.rest.errors.ExceptionTranslator;
-import com.gradingapp.web.rest.util.ActiveUserStore;
 import com.gradingapp.web.rest.vm.KeyAndPasswordVM;
 import com.gradingapp.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -62,9 +61,6 @@ public class AccountResourceIntTest {
     private UserService userService;
 
     @Autowired
-    private ActiveUserStore activeUserStore;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -88,10 +84,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, activeUserStore);
+            new AccountResource(userRepository, userService, mockMailService);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, activeUserStore);
+            new AccountResource(userRepository, mockUserService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)
