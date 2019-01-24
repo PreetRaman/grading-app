@@ -7,14 +7,19 @@ import com.gradingapp.repository.SubmissionsRepository;
 import com.gradingapp.repository.UserRepository;
 import com.gradingapp.security.AuthoritiesConstants;
 import com.gradingapp.security.SecurityUtils;
+import com.gradingapp.service.util.WriteCsvToResponse;
 import com.gradingapp.web.rest.errors.BadRequestAlertException;
 import com.gradingapp.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -146,6 +151,15 @@ public class SubmissionsResource {
         log.debug("REST request to delete Submissions : {}");
 
         submissionsRepository.deleteAll();
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("All data deleted", null)).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, "all")).build();
+    }
+
+    /**
+     * Handle request to download a CSV document
+     */
+    @RequestMapping(value = "/submissions/download", method = RequestMethod.GET, produces = "text/csv")
+    public void download(HttpServletResponse response) throws IOException {
+        List<Submissions> submissionsList = submissionsRepository.findAll();
+        WriteCsvToResponse.writeSubmissionList(response.getWriter(), submissionsList);
     }
 }

@@ -39,4 +39,8 @@ export class SubmissionsService {
     deleteAll(): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}`, { observe: 'response' });
     }
+
+    exportCSV(): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/download`);
+    }
 }

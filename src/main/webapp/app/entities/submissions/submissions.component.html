@@ -3,18 +3,18 @@
     <br/>
     <div class="table-responsive" *ngIf="submissions">
         <div class="">
-            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-submissions"
+            <button id="jh-create-entity-clear" class="btn btn-primary float-right jh-create-entity create-submissions"
                     (click)="clearData()">
                 <fa-icon [icon]="'times'"></fa-icon>
                 <span jhiTranslate="gradingApp.submissions.home.clearData"></span>
             </button>
-            <button id="jh-create-entity" style="margin-right: 20px;"
+            <button id="jh-create-entity-export" (click)="exportData()" style="margin-right: 20px;"
                     class="btn btn-primary float-right jh-create-entity create-submissions">
                 <fa-icon [icon]="'upload'"></fa-icon>
                 <span jhiTranslate="gradingApp.submissions.home.importCsv"></span>
             </button>
         </div>
-        <h2 id="table-heading">
+        <h2 id="table-heading-ladmin">
             <span jhiTranslate="gradingApp.submissions.table.title"></span>
         </h2>
         <table class="table table-striped">

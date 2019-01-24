@@ -66,8 +66,29 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
     }
 
     clearData() {
-        this.submissionsService.deleteAll();
-        console.log('I m called ');
+        this.submissionsService.deleteAll().subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'submissionsListModification',
+                content: 'Deleted an submissions'
+            });
+        });
+    }
+
+    exportData() {
+        this.submissionsService.exportCSV().subscribe(data => {
+            let parsedResponse = data.text();
+            console.log(parsedResponse);
+            this.downloadFile(parsedResponse);
+        },
+        error => {
+            console.log(error.text);
+        });
+    }
+
+    downloadFile(data: any){
+        var blob = new Blob([data], { type: 'text/csv' });
+        var url= window.URL.createObjectURL(blob);
+        window.open(url);
     }
 
     registerChangeInSubmissions() {
