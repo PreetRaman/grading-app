@@ -48,7 +48,8 @@ public class ActiveUsersResource {
     private final ActiveUsersQueryService activeUsersQueryService;
 
     private final UserService userService;
-   private FdaiNummerRepository fdaiNummerRepository;
+
+    private FdaiNummerRepository fdaiNummerRepository;
 
     public ActiveUsersResource(ActiveUsersService activeUsersService, ActiveUsersQueryService activeUsersQueryService, UserService userService, FdaiNummerRepository fdaiNummerRepository) {
         this.activeUsersService = activeUsersService;
@@ -195,7 +196,6 @@ public class ActiveUsersResource {
         log.debug("REST request to get ActiveUsers by ladmin: {}", criteria);
         String user = SecurityUtils.getCurrentUserLogin().get();
         Optional<User> user1 = userService.getUserWithAuthoritiesByLogin(user);
-        //Page<ActiveUsersDTO> page = activeUsersQueryService.findByCriteria(criteria, pageable);
         //current user id
 
         //get from fdai_nummer list of all users with ladmin id

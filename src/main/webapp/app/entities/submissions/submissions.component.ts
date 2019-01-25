@@ -25,7 +25,7 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        this.submissionsService.query().subscribe(
+        this.submissionsService.queryByLadmin().subscribe(
             (res: HttpResponse<ISubmissions[]>) => {
                 this.submissions = res.body;
             },

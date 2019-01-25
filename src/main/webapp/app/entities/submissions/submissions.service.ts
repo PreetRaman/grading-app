@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<ISubmissions[]>;
 @Injectable({ providedIn: 'root' })
 export class SubmissionsService {
     public resourceUrl = SERVER_API_URL + 'api/submissions';
+    public ladminUrl = SERVER_API_URL + 'api/submissions/ladmin';
 
     constructor(private http: HttpClient) {}
 
@@ -42,5 +43,10 @@ export class SubmissionsService {
 
     exportCSV(): Observable<any> {
         return this.http.get<any>(`${this.resourceUrl}/download`);
+    }
+
+    queryByLadmin(): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<ISubmissions[]>(this.ladminUrl, { params: options, observe: 'response' });
     }
 }

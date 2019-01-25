@@ -3,8 +3,10 @@ package com.gradingapp.web.rest;
 import com.gradingapp.GradingApp;
 
 import com.gradingapp.domain.Submissions;
+import com.gradingapp.repository.FdaiNummerRepository;
 import com.gradingapp.repository.SubmissionsRepository;
 import com.gradingapp.repository.UserRepository;
+import com.gradingapp.service.UserService;
 import com.gradingapp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -80,6 +82,12 @@ public class SubmissionsResourceIntTest {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private FdaiNummerRepository fdaiNummerRepository;
+
+    @Autowired
     private EntityManager em;
 
     private MockMvc restSubmissionsMockMvc;
@@ -89,7 +97,7 @@ public class SubmissionsResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SubmissionsResource submissionsResource = new SubmissionsResource(submissionsRepository, userRepository);
+        final SubmissionsResource submissionsResource = new SubmissionsResource(submissionsRepository, userRepository, userService, fdaiNummerRepository);
         this.restSubmissionsMockMvc = MockMvcBuilders.standaloneSetup(submissionsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

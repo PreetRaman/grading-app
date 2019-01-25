@@ -1,12 +1,15 @@
 package com.gradingapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.gradingapp.domain.FdaiNummer;
 import com.gradingapp.domain.Submissions;
 import com.gradingapp.domain.User;
+import com.gradingapp.repository.FdaiNummerRepository;
 import com.gradingapp.repository.SubmissionsRepository;
 import com.gradingapp.repository.UserRepository;
 import com.gradingapp.security.AuthoritiesConstants;
 import com.gradingapp.security.SecurityUtils;
+import com.gradingapp.service.UserService;
 import com.gradingapp.service.util.WriteCsvToResponse;
 import com.gradingapp.web.rest.errors.BadRequestAlertException;
 import com.gradingapp.web.rest.util.HeaderUtil;
@@ -19,10 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -40,9 +45,15 @@ public class SubmissionsResource {
 
     private final UserRepository userRepository;
 
-    public SubmissionsResource(SubmissionsRepository submissionsRepository, UserRepository userRepository) {
+    private final UserService userService;
+
+    private final FdaiNummerRepository fdaiNummerRepository;
+
+    public SubmissionsResource(SubmissionsRepository submissionsRepository, UserRepository userRepository, UserService userService, FdaiNummerRepository fdaiNummerRepository) {
         this.submissionsRepository = submissionsRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
+        this.fdaiNummerRepository = fdaiNummerRepository;
     }
 
     /**
@@ -161,5 +172,28 @@ public class SubmissionsResource {
     public void download(HttpServletResponse response) throws IOException {
         List<Submissions> submissionsList = submissionsRepository.findAll();
         WriteCsvToResponse.writeSubmissionList(response.getWriter(), submissionsList);
+    }
+
+    /*Handle Get request for submissions of particular LADMINS */
+
+    @GetMapping("/submissions/ladmin")
+    @Timed
+    public List<Submissions> getAllSubmissionsforLadmin() {
+        log.debug("REST request to get all Submissions for LADMINS");
+        // get current user id
+        String currentuser = SecurityUtils.getCurrentUserLogin().get();
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(currentuser);
+
+        // get list of all fdainummber list with the ladmin id
+        List<FdaiNummer> fdaiNummers = fdaiNummerRepository.findAllByUser(user.get());
+
+        // create a new array list of submissions for that id
+        List<Submissions> list = new ArrayList<>();
+        fdaiNummers.forEach(fdaiNummer -> {
+            List<Submissions> submissions1 = submissionsRepository.findByFdaiNumber(fdaiNummer.getFdainumber());
+            list.add(submissions1.get(0));
+        });
+
+       return list;
     }
 }
