@@ -1,0 +1,24 @@
+{
+    "gradingApp": {
+        "activeUsers": {
+            "home": {
+                "title": "Active Users",
+                "createLabel": "Active Users erstellen",
+                "createOrEditLabel": "Active Users erstellen oder bearbeiten"
+            },
+            "created": "Active Users erstellt mit ID {{ param }}",
+            "updated": "Active Users aktualisiert mit ID {{ param }}",
+            "deleted": "Active Users gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Active Users {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Active Users"
+            },
+            "username": "Username",
+            "login_time": "Login Time",
+            "logout_time": "Logout Time",
+            "active": "Active"
+        }
+    }
+}

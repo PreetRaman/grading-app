@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="activeUsers">
+            <h2><span jhiTranslate="gradingApp.activeUsers.detail.title">Active Users</span> {{activeUsers.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gradingApp.activeUsers.username">Username</span></dt>
+                <dd>
+                    <span>{{activeUsers.username}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.activeUsers.login_time">Login Time</span></dt>
+                <dd>
+                    <span>{{activeUsers.login_time}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.activeUsers.logout_time">Logout Time</span></dt>
+                <dd>
+                    <span>{{activeUsers.logout_time}}</span>
+                </dd>
+                <dt><span jhiTranslate="gradingApp.activeUsers.active">Active</span></dt>
+                <dd>
+                    <span>{{activeUsers.active}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/active-users', activeUsers.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

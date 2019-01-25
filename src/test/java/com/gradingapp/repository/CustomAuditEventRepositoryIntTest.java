@@ -4,6 +4,7 @@ import com.gradingapp.GradingApp;
 import com.gradingapp.config.Constants;
 import com.gradingapp.config.audit.AuditEventConverter;
 import com.gradingapp.domain.PersistentAuditEvent;
+import com.gradingapp.service.ActiveUsersService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +42,9 @@ public class CustomAuditEventRepositoryIntTest {
     @Autowired
     private AuditEventConverter auditEventConverter;
 
+    @Autowired
+    private ActiveUsersService activeUsersService;
+
     private CustomAuditEventRepository customAuditEventRepository;
 
     private PersistentAuditEvent testUserEvent;
@@ -51,7 +55,7 @@ public class CustomAuditEventRepositoryIntTest {
 
     @Before
     public void setup() {
-        customAuditEventRepository = new CustomAuditEventRepository(persistenceAuditEventRepository, auditEventConverter);
+        customAuditEventRepository = new CustomAuditEventRepository(persistenceAuditEventRepository, auditEventConverter, activeUsersService);
         persistenceAuditEventRepository.deleteAll();
         Instant oneHourAgo = Instant.now().minusSeconds(3600);
 

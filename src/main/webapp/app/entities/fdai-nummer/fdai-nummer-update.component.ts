@@ -30,12 +30,18 @@ export class FdaiNummerUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ fdaiNummer }) => {
             this.fdaiNummer = fdaiNummer;
         });
-        this.userService.query().subscribe(
+        this.userService.queryByAuthority('ROLE_LADMIN').subscribe(
             (res: HttpResponse<IUser[]>) => {
                 this.users = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        /*this.userService.query().subscribe(
+            (res: HttpResponse<IUser[]>) => {
+                this.users = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );*/
     }
 
     previousState() {

@@ -9,6 +9,7 @@ import { IUser } from './user.model';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     public resourceUrl = SERVER_API_URL + 'api/users';
+    public roleUrl = SERVER_API_URL + 'api/users/role';
 
     constructor(private http: HttpClient) {}
 
@@ -27,6 +28,11 @@ export class UserService {
     query(req?: any): Observable<HttpResponse<IUser[]>> {
         const options = createRequestOption(req);
         return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    queryByAuthority(role: String, req?: any): Observable<HttpResponse<IUser[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<IUser[]>(`${this.roleUrl}/${role}`, { params: options, observe: 'response' });
     }
 
     delete(login: string): Observable<HttpResponse<any>> {

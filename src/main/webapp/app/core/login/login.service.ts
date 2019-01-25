@@ -2,10 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { Principal } from '../auth/principal.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
+import {Observable} from 'rxjs/index';
+import {SERVER_API_URL} from '../../app.constants';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    constructor(private principal: Principal, private authServerProvider: AuthServerProvider) {}
+    public resourceUrl = SERVER_API_URL + 'api/active-users/logout';
+
+    constructor(
+        private principal: Principal,
+        private authServerProvider: AuthServerProvider,
+        private http: HttpClient
+    ) {}
 
     login(credentials, callback?) {
         const cb = callback || function() {};
@@ -34,5 +43,10 @@ export class LoginService {
     logout() {
         this.authServerProvider.logout().subscribe();
         this.principal.authenticate(null);
+    }
+
+    backendLogout(): Observable<any> {
+        return this.http.get(this.resourceUrl);
+
     }
 }

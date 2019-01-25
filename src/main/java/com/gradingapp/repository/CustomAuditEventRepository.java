@@ -4,6 +4,8 @@ import com.gradingapp.config.Constants;
 import com.gradingapp.config.audit.AuditEventConverter;
 import com.gradingapp.domain.PersistentAuditEvent;
 
+import com.gradingapp.service.ActiveUsersService;
+import com.gradingapp.service.dto.ActiveUsersDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -32,13 +34,16 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
     private final AuditEventConverter auditEventConverter;
 
+    private ActiveUsersService activeUsersService;
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public CustomAuditEventRepository(PersistenceAuditEventRepository persistenceAuditEventRepository,
-            AuditEventConverter auditEventConverter) {
+            AuditEventConverter auditEventConverter, ActiveUsersService activeUsersService) {
 
         this.persistenceAuditEventRepository = persistenceAuditEventRepository;
         this.auditEventConverter = auditEventConverter;
+        this.activeUsersService = activeUsersService;
     }
 
     @Override
@@ -61,6 +66,19 @@ public class CustomAuditEventRepository implements AuditEventRepository {
             Map<String, String> eventData = auditEventConverter.convertDataToStrings(event.getData());
             persistentAuditEvent.setData(truncate(eventData));
             persistenceAuditEventRepository.save(persistentAuditEvent);
+
+            //check if user logged in already but not logged out in active users
+            Optional<ActiveUsersDTO> act =    activeUsersService.findActiveUserFromName(event.getPrincipal());
+            if(act.isPresent())
+            {
+                activeUsersService.delete(act.get().getId());
+            }
+            //set active user to be logged in if not present above
+            ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
+            activeUsersDTO.setActive(true);
+            activeUsersDTO.setLogin_time(event.getTimestamp());
+            activeUsersDTO.setUsername(event.getPrincipal());
+            activeUsersService.save(activeUsersDTO);
         }
     }
 

@@ -1,7 +1,9 @@
 package com.gradingapp.repository;
 
+import com.gradingapp.domain.Authority;
 import com.gradingapp.domain.User;
 
+import com.gradingapp.security.AuthoritiesConstants;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,4 +46,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByEmail(String email);
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
+
+    Page<User> findAllByAuthoritiesContains(Pageable pageable, Authority authority);
 }

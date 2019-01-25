@@ -4,9 +4,9 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { VERSION } from 'app/app.constants';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from '../profiles/profile.service';
+import {VERSION} from '../../app.constants';
 
 @Component({
     selector: 'jhi-navbar',
@@ -64,6 +64,9 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
+        this.loginService.backendLogout().subscribe( res => {
+            console.log('hey backend logout');
+        });
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);

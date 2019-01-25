@@ -8,6 +8,7 @@ import com.gradingapp.repository.UserRepository;
 import com.gradingapp.security.AuthoritiesConstants;
 import com.gradingapp.security.SecurityUtils;
 import com.gradingapp.service.dto.UserDTO;
+import com.gradingapp.service.mapper.UserMapper;
 import com.gradingapp.service.util.RandomUtil;
 import com.gradingapp.web.rest.errors.*;
 
@@ -43,11 +44,14 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager,  UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userMapper = userMapper;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -251,6 +255,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserDTO> getUserWithAuthority(Authority role, Pageable pageable) {
+        return userRepository.findAllByAuthoritiesContains(pageable, role).map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,7 @@
 package com.gradingapp.web.rest;
 
 import com.gradingapp.config.Constants;
+import com.gradingapp.domain.Authority;
 import com.gradingapp.domain.User;
 import com.gradingapp.repository.UserRepository;
 import com.gradingapp.security.AuthoritiesConstants;
@@ -186,6 +187,24 @@ public class UserResource {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
+    }
+
+    /**
+     * GET /users/:role : get the "role" user.
+     *
+     * @param role the role of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
+     */
+    @GetMapping("/users/role/{role}")
+    @Timed
+    public ResponseEntity<List<UserDTO>> getUsers(@PathVariable String role, Pageable pageable) {
+        log.debug("REST request to get Users with role : {}", role);
+        Authority authority = new Authority();
+        authority.setName(role);
+        final Page<UserDTO> page =  userService.getUserWithAuthority(authority, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
     }
 
 

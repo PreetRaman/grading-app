@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "username",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "login_time",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "logout_time",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "active",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20190124183540",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceClass",
+    "entityTableName": "active_users",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination"
+}
