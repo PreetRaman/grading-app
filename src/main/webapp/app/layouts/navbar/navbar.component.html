@@ -22,7 +22,23 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *jhiHasAnyAuthority="'ROLE_USER'" ngbDropdown class="nav-item dropdown pointer"
+            <li *jhiHasAnyAuthority="'ROLE_LADMIN'" ngbDropdown class="nav-item dropdown pointer"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="submissions" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <fa-icon icon="eye" fixedWidth="true"></fa-icon>
+                    <span jhiTranslate="global.menu.entities.ladmin">Submissions</span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_LADMIN'" ngbDropdown class="nav-item dropdown pointer"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="active-users" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                    <span jhiTranslate="global.menu.entities.activeUsers">Submissions</span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_USER'" [hidden]="isLadmin() || isProfessor()" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="submissions" routerLinkActive="active"
                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">

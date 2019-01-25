@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {JhiLanguageService} from 'ng-jhipster';
+import {SessionStorageService} from 'ngx-webstorage';
 
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from 'app/core';
-import { ProfileService } from '../profiles/profile.service';
+import {JhiLanguageHelper, Principal, LoginModalService, LoginService} from 'app/core';
+import {ProfileService} from '../profiles/profile.service';
 import {VERSION} from '../../app.constants';
 
 @Component({
@@ -21,16 +21,14 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
 
-    constructor(
-        private loginService: LoginService,
-        private languageService: JhiLanguageService,
-        private languageHelper: JhiLanguageHelper,
-        private sessionStorage: SessionStorageService,
-        private principal: Principal,
-        private loginModalService: LoginModalService,
-        private profileService: ProfileService,
-        private router: Router
-    ) {
+    constructor(private loginService: LoginService,
+                private languageService: JhiLanguageService,
+                private languageHelper: JhiLanguageHelper,
+                private sessionStorage: SessionStorageService,
+                private principal: Principal,
+                private loginModalService: LoginModalService,
+                private profileService: ProfileService,
+                private router: Router) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
     }
@@ -44,6 +42,14 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+    }
+
+    isLadmin(): boolean {
+        return this.principal.userIdentity.authorities.indexOf('ROLE_LADMIN') > -1;
+    }
+
+    isProfessor(): boolean {
+        return this.principal.userIdentity.authorities.indexOf('ROLE_PROFESSOR') > -1;
     }
 
     changeLanguage(languageKey: string) {
@@ -64,8 +70,8 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
-        this.loginService.backendLogout().subscribe( res => {
-            console.log('hey backend logout');
+        this.loginService.backendLogout().subscribe(res => {
+            console.log(res);
         });
         this.collapseNavbar();
         this.loginService.logout();

@@ -9,9 +9,9 @@
             "entities": {
                 "main": "Entitäten",
                 "submissions": "Daten hochladen",
-                "admin": "View submitted files",
+                "ladmin": "Gesendete Dateien anzeigen",
                 "fdaiNummer": "Fdai Nummer",
-                "activeUsers": "Active Users",
+                "activeUsers": "Active Students",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "fdainummer": "Geben Sie die Fdai Nummer ein"
             },
