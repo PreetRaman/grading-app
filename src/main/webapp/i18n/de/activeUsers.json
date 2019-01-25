@@ -2,7 +2,7 @@
     "gradingApp": {
         "activeUsers": {
             "home": {
-                "title": "Active Users",
+                "title": "Active Students",
                 "createLabel": "Active Users erstellen",
                 "createOrEditLabel": "Active Users erstellen oder bearbeiten"
             },

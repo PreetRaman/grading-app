@@ -2,7 +2,7 @@
     "gradingApp": {
         "submissions": {
             "home": {
-                "title": "Add new file[DE]",
+                "title": "Neue Datei hinzufügen",
                 "createLabel": "Neue Datei hochladen",
                 "createOrEditLabel": "Submissions erstellen oder bearbeiten",
                 "clearData": "Daten löschen",
@@ -17,16 +17,16 @@
             "detail": {
                 "title": "Submissions"
             },
-            "fdaiNumber": "Fdai Number",
+            "fdaiNumber": "Fdai Nummer",
             "name": "Name",
-            "course": "Course",
+            "course": "Kurs",
             "subject": "Subject",
             "exercises": "Exercises",
             "files": "Files",
             "print": "PDF drucken",
             "user": "User",
             "table": {
-                "title": "Submitted files"
+                "title": "Übermittelte Dateien"
             }
         }
     }
