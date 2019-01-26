@@ -16,13 +16,11 @@ import com.gradingapp.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,6 +28,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * REST controller for managing Submissions.
  */
@@ -72,14 +71,13 @@ public class SubmissionsResource {
         }
         if (SecurityUtils.getCurrentUserLogin().isPresent()) {
             String user = SecurityUtils.getCurrentUserLogin().get();
-            if (userRepository.findOneByLogin(user).isPresent())
-            {
+            if (userRepository.findOneByLogin(user).isPresent()) {
                 User u1 = userRepository.findOneByLogin(user).get();
                 submissions.setUser(u1);
             }
         }
 
-        if(submissionsRepository.findByFdaiNumberAndCourseAndExercises(submissions.getFdaiNumber(), submissions.getCourse(),
+        if (submissionsRepository.findByFdaiNumberAndCourseAndExercises(submissions.getFdaiNumber(), submissions.getCourse(),
             submissions.getExercises()).size() > 0) {
             throw new BadRequestAlertException("Already Submitted this exercise", ENTITY_NAME, "exerciseexists");
         }
@@ -171,7 +169,11 @@ public class SubmissionsResource {
     @RequestMapping(value = "/submissions/download", method = RequestMethod.GET, produces = "text/csv")
     public void download(HttpServletResponse response) throws IOException {
         List<Submissions> submissionsList = submissionsRepository.findAll();
-        WriteCsvToResponse.writeSubmissionList(response.getWriter(), submissionsList);
+
+        response.setContentType("text/plain; charset=utf-8");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "download.csv" + "\"");
+
+       WriteCsvToResponse.writeSubmissionList(response.getWriter(), submissionsList);
     }
 
     /*Handle Get request for submissions of particular LADMINS */
@@ -190,10 +192,11 @@ public class SubmissionsResource {
         // create a new array list of submissions for that id
         List<Submissions> list = new ArrayList<>();
         fdaiNummers.forEach(fdaiNummer -> {
-            List<Submissions> submissions1 = submissionsRepository.findByFdaiNumber(fdaiNummer.getFdainumber());
-            list.add(submissions1.get(0));
+            List<Submissions> submissions1 = submissionsRepository.findAllByFdaiNumber(fdaiNummer.getFdainumber());
+            submissions1.forEach(subm -> {
+                list.add(subm);
+            });
         });
-
-       return list;
+        return list;
     }
 }

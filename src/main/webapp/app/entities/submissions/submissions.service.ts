@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
@@ -13,6 +13,7 @@ type EntityArrayResponseType = HttpResponse<ISubmissions[]>;
 export class SubmissionsService {
     public resourceUrl = SERVER_API_URL + 'api/submissions';
     public ladminUrl = SERVER_API_URL + 'api/submissions/ladmin';
+    public downloadUrl = SERVER_API_URL + 'api/submissions/download';
 
     constructor(private http: HttpClient) {}
 
@@ -41,11 +42,39 @@ export class SubmissionsService {
         return this.http.delete<any>(`${this.resourceUrl}`, { observe: 'response' });
     }
 
-    exportCSV(): Observable<any> {
-        return this.http.get<any>(`${this.resourceUrl}/download`);
+    exportCSV() {
+        let headers =  new HttpHeaders({
+            'Content-type': 'text/csv'
+        });
+        return this.http.get(this.downloadUrl, { headers: headers })
+            .toPromise()
+            .then(res => {
+                if(res && res["_body"]) {
+                    this.downloadFile(res["_body"]);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
-    queryByLadmin(): Observable<any> {
+    downloadFile(data) {
+        let blob = new Blob(['\ufeff' + data], { type: 'text/csv;charset=utf-8;' });
+        let dwldLink = document.createElement("a");
+        let url = URL.createObjectURL(blob);
+        let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+        if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+            dwldLink.setAttribute("target", "_blank");
+        }
+        dwldLink.setAttribute("href", url);
+        dwldLink.setAttribute("download", "Enterprise.csv");
+        dwldLink.style.visibility = "hidden";
+        document.body.appendChild(dwldLink);
+        dwldLink.click();
+        document.body.removeChild(dwldLink);
+    }
+
+    queryByLadmin(req?: any): Observable<any> {
         const options = createRequestOption(req);
         return this.http.get<ISubmissions[]>(this.ladminUrl, { params: options, observe: 'response' });
     }
