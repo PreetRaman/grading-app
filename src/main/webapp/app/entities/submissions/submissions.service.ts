@@ -46,29 +46,29 @@ export class SubmissionsService {
         const headers =  new HttpHeaders({
             'Content-type': 'text/csv'
         });
-        return this.http.get(this.downloadUrl, { responseType:'text', headers: headers })
+        return this.http.get(this.downloadUrl, { responseType: 'text', headers })
             .toPromise()
             .then(res => {
-                if(res) {
+                if (res) {
                     this.downloadFile(res);
                 }
             })
-            .catch(err => {
+            .catch (err => {
                 this.downloadFile(err.error.text);
             });
     }
 
     downloadFile(data) {
-        let blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
-        let dwldLink = document.createElement("a");
-        let url = URL.createObjectURL(blob);
-        let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-        if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-            dwldLink.setAttribute("target", "_blank");
+        const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+        const dwldLink = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        const isSafariBrowser = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
+        if (isSafariBrowser) {
+            dwldLink.setAttribute('target', '_blank');
         }
-        dwldLink.setAttribute("href", url);
-        dwldLink.setAttribute("download", "Enterprise.csv");
-        dwldLink.style.visibility = "hidden";
+        dwldLink.setAttribute('href', url);
+        dwldLink.setAttribute('download', 'data.csv');
+        dwldLink.style.visibility = 'hidden';
         document.body.appendChild(dwldLink);
         dwldLink.click();
         document.body.removeChild(dwldLink);
