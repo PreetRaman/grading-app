@@ -43,23 +43,23 @@ export class SubmissionsService {
     }
 
     exportCSV() {
-        let headers =  new HttpHeaders({
+        const headers =  new HttpHeaders({
             'Content-type': 'text/csv'
         });
-        return this.http.get(this.downloadUrl, { headers: headers })
+        return this.http.get(this.downloadUrl, { responseType:'text', headers: headers })
             .toPromise()
             .then(res => {
-                if(res && res["_body"]) {
-                    this.downloadFile(res["_body"]);
+                if(res) {
+                    this.downloadFile(res);
                 }
             })
             .catch(err => {
-                console.log(err);
+                this.downloadFile(err.error.text);
             });
     }
 
     downloadFile(data) {
-        let blob = new Blob(['\ufeff' + data], { type: 'text/csv;charset=utf-8;' });
+        let blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
         let dwldLink = document.createElement("a");
         let url = URL.createObjectURL(blob);
         let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;

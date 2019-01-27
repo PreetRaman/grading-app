@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -166,18 +167,35 @@ public class SubmissionsResource {
     /**
      * Handle request to download a CSV document
      */
+    @Secured({ AuthoritiesConstants.LADMIN })
     @RequestMapping(value = "/submissions/download", method = RequestMethod.GET, produces = "text/csv")
     public void download(HttpServletResponse response) throws IOException {
-        List<Submissions> submissionsList = submissionsRepository.findAll();
+        // get current user
+        String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(currentUser);
+
+        // get list of FDAI numbers with curent id
+        List<FdaiNummer> fdaiNummers = fdaiNummerRepository.findAllByUser(user.get());
+
+        List<Submissions> listSubmissions = new ArrayList<>();
+        fdaiNummers.forEach(fdaiNummer -> {
+            List<Submissions> submissions1 = submissionsRepository.findAllByFdaiNumber(fdaiNummer.getFdainumber());
+            submissions1.forEach(subm -> {
+                listSubmissions.add(subm);
+            });
+        });
+        // List<Submissions> submissionsList = submissionsRepository.findAll();
 
         response.setContentType("text/plain; charset=utf-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "download.csv" + "\"");
 
-       WriteCsvToResponse.writeSubmissionList(response.getWriter(), submissionsList);
+       WriteCsvToResponse.writeSubmissionList(response.getWriter(), listSubmissions);
     }
 
     /*Handle Get request for submissions of particular LADMINS */
 
+
+    @Secured({ AuthoritiesConstants.LADMIN, AuthoritiesConstants.ADMIN })
     @GetMapping("/submissions/ladmin")
     @Timed
     public List<Submissions> getAllSubmissionsforLadmin() {
