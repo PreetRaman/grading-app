@@ -22,7 +22,7 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *jhiHasAnyAuthority="'ROLE_LADMIN'" ngbDropdown class="nav-item dropdown pointer"
+            <li *jhiHasAnyAuthority="['ROLE_LADMIN', 'ROLE_PROFESSOR']" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="submissions" routerLinkActive="active"
                    [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
@@ -136,13 +136,13 @@
                     </li>
                 </ul>
             </li>
-         <!--   <li>
-                <a class="dropdown-item" routerLink="register" routerLinkActive="active"
-                   (click)="collapseNavbar()">
-                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
-                    <span jhiTranslate="global.menu.admin.userManagement">User management</span>
-                </a>
-            </li>-->
+          <!--<li>-->
+                <!--<a class="dropdown-item" routerLink="register" routerLinkActive="active"-->
+                   <!--(click)="collapseNavbar()">-->
+                    <!--<fa-icon icon="user" fixedWidth="true"></fa-icon>-->
+                    <!--<span jhiTranslate="global.menu.admin.userManagement">User management</span>-->
+                <!--</a>-->
+            <!--</li>-->
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <a *ngIf="isAuthenticated()" class="nav-link" (click)="logout()" id="logout">

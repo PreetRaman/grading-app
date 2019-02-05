@@ -17,7 +17,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let activeUsers of activeUsers ;trackBy: trackId">
+            <tr *ngFor="let activeUsers of activeUsers ;trackBy: trackId" [ngClass]="{
+                'bg-danger text-white': !activeUsers.login_time,
+                'bg-warning text-white': activeUsers.logout_time
+                }">
                 <td><a [routerLink]="['/active-users', activeUsers.id, 'view' ]">{{activeUsers.id}}</a></td>
                 <td>{{activeUsers.username}}</td>
                 <td>{{activeUsers.login_time | date:'medium'}}</td>

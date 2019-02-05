@@ -11,9 +11,9 @@
                 "submissions": "Upload Files",
                 "ladmin": "View submitted files",
                 "fdaiNummer": "Fdai Nummer",
-                "activeUsers": "Active Students",
+                "activeUsers": "Assigned Students",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-                "fdainummer": "Enter Fdai Numbers"
+                "fdainummer": "Upload Fdai Number list"
             },
             "account": {
                 "main": "Account",

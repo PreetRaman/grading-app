@@ -32,6 +32,15 @@ entity FdaiNummer {
     ip String,
 }
 
+entity ActiveUsers {
+    username String,
+    login_time String,
+    logout_time String,
+    active Boolean,
+    is_ip_address String,
+    should_ip_address String,
+}
+
 relationship ManyToOne {
     Submissions{user(login)} to User
 }

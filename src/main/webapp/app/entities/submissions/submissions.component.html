@@ -1,8 +1,8 @@
-<div *jhiHasAnyAuthority="'ROLE_LADMIN'">
+<div *jhiHasAnyAuthority="['ROLE_LADMIN', 'ROLE_PROFESSOR']">
     <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="submissions">
-        <div class="">
+        <div *jhiHasAnyAuthority="'ROLE_PROFESSOR'">
             <button id="jh-create-entity-clear" class="btn btn-primary float-right jh-create-entity create-submissions"
                     (click)="clearData()">
                 <fa-icon [icon]="'times'"></fa-icon>
@@ -53,7 +53,7 @@
 </div>
 
 
-<div [hidden]="isLadmin()">
+<div [hidden]="isLadmin() || isProfessor()">
     <h2 id="page-heading">
         <span jhiTranslate="gradingApp.submissions.home.title">Submissions</span>
     </h2>

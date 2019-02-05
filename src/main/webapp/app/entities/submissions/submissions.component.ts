@@ -55,6 +55,10 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
         return this.principal.userIdentity.authorities.indexOf('ROLE_LADMIN') > -1;
     }
 
+    isProfessor(): boolean {
+        return this.principal.userIdentity.authorities.indexOf('ROLE_PROFESSOR') > -1;
+    }
+
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }

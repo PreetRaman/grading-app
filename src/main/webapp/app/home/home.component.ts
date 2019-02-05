@@ -74,11 +74,7 @@ export class HomeComponent implements OnInit {
                 if (redirect) {
                     this.stateStorageService.getUrl();
                     this.stateStorageService.storeUrl(null);
-                    if (this.principal.hasAnyAuthorityDirect(['ROLE_PROFESSOR'])) {
-                        this.router.navigate(['/fdai-nummer']);
-                    } else {
-                        this.router.navigate(['/submissions']);
-                    }
+                    this.router.navigate(['/submissions']);
                 }
             })
             .catch(() => {

@@ -4,7 +4,8 @@
             "home": {
                 "title": "Fdai Nummers",
                 "createLabel": "Enter a new Fdai Nummer",
-                "createOrEditLabel": "Create or edit a Fdai Nummer"
+                "createOrEditLabel": "Create or edit a Fdai Nummer",
+                "importfdai": "Import Fdai List"
             },
             "created": "A new Fdai Nummer is created with identifier {{ param }}",
             "updated": "A Fdai Nummer is updated with identifier {{ param }}",

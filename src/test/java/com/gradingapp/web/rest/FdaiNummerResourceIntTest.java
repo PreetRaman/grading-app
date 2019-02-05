@@ -4,6 +4,8 @@ import com.gradingapp.GradingApp;
 
 import com.gradingapp.domain.FdaiNummer;
 import com.gradingapp.repository.FdaiNummerRepository;
+import com.gradingapp.service.ActiveUsersService;
+import com.gradingapp.service.UserService;
 import com.gradingapp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -64,10 +66,16 @@ public class FdaiNummerResourceIntTest {
 
     private FdaiNummer fdaiNummer;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ActiveUsersService activeUsersService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FdaiNummerResource fdaiNummerResource = new FdaiNummerResource(fdaiNummerRepository);
+        final FdaiNummerResource fdaiNummerResource = new FdaiNummerResource(fdaiNummerRepository, userService, activeUsersService);
         this.restFdaiNummerMockMvc = MockMvcBuilders.standaloneSetup(fdaiNummerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -145,7 +153,7 @@ public class FdaiNummerResourceIntTest {
             .andExpect(jsonPath("$.[*].fdainumber").value(hasItem(DEFAULT_FDAINUMBER.toString())))
             .andExpect(jsonPath("$.[*].ip").value(hasItem(DEFAULT_IP.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getFdaiNummer() throws Exception {

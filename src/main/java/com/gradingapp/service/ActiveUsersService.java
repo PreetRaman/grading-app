@@ -85,7 +85,7 @@ public class ActiveUsersService {
 
     public Optional<ActiveUsersDTO> findActiveUserFromName(String name) {
         log.debug("Request to get active user with name {}", name);
-        return activeUsersRepository.findOneByUsernameAndActiveIsTrue(name)
+        return activeUsersRepository.findOneByUsername(name)
             .map(activeUsersMapper::toDto);
     }
 
@@ -98,7 +98,7 @@ public class ActiveUsersService {
     @Transactional(readOnly = true)
     public Optional<ActiveUsersDTO> findAllByUsername(String username) {
         log.debug("Request to get all ActiveUsers by username for a single ID");
-        return activeUsersRepository.findOneByUsernameAndActiveIsTrue(username)
+        return activeUsersRepository.findOneByUsername(username)
             .map(activeUsersMapper::toDto);
     }
 }
