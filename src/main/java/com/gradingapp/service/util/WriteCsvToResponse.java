@@ -25,7 +25,7 @@ public class WriteCsvToResponse {
             mapStrategy.setType(Submissions.class);
             mapStrategy.generateHeader();
 
-            String[] columns = new String[]{"fdaiNumber", "name", "course", "subject", "exercises"};
+            String[] columns = new String[]{"fdaiNumber", "name", "course", "subject", "exercises", "files"};
             mapStrategy.setColumnMapping(columns);
 
             StatefulBeanToCsv btcsv = new StatefulBeanToCsvBuilder(writer)

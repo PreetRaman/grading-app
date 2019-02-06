@@ -18,6 +18,14 @@
         {
             "fieldName": "active",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "is_ip_address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "should_ip_address",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20190124183540",

@@ -19,6 +19,10 @@ public class ActiveUsersDTO implements Serializable {
 
     private Boolean active;
 
+    private String is_ip_address;
+
+    private String should_ip_address;
+
     public Long getId() {
         return id;
     }
@@ -59,6 +63,22 @@ public class ActiveUsersDTO implements Serializable {
         this.active = active;
     }
 
+    public String getIs_ip_address() {
+        return is_ip_address;
+    }
+
+    public void setIs_ip_address(String is_ip_address) {
+        this.is_ip_address = is_ip_address;
+    }
+
+    public String getShould_ip_address() {
+        return should_ip_address;
+    }
+
+    public void setShould_ip_address(String should_ip_address) {
+        this.should_ip_address = should_ip_address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,6 +108,8 @@ public class ActiveUsersDTO implements Serializable {
             ", login_time='" + getLogin_time() + "'" +
             ", logout_time='" + getLogout_time() + "'" +
             ", active='" + isActive() + "'" +
+            ", is_ip_address='" + getIs_ip_address() + "'" +
+            ", should_ip_address='" + getShould_ip_address() + "'" +
             "}";
     }
 }

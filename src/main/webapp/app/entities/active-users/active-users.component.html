@@ -13,19 +13,22 @@
             <th jhiSortBy="login_time"><span jhiTranslate="gradingApp.activeUsers.login_time">Login Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="logout_time"><span jhiTranslate="gradingApp.activeUsers.logout_time">Logout Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="active"><span jhiTranslate="gradingApp.activeUsers.active">Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="is_ip_address"><span jhiTranslate="gradingApp.activeUsers.is_ip_address">Is Ip Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="should_ip_address"><span jhiTranslate="gradingApp.activeUsers.should_ip_address">Should Ip Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let activeUsers of activeUsers ;trackBy: trackId" [ngClass]="{
-                'bg-danger text-white': !activeUsers.login_time,
-                'bg-warning text-white': activeUsers.logout_time
+                    'bg-danger text-white':!activeUsers.login_time
                 }">
                 <td><a [routerLink]="['/active-users', activeUsers.id, 'view' ]">{{activeUsers.id}}</a></td>
                 <td>{{activeUsers.username}}</td>
                 <td>{{activeUsers.login_time | date:'medium'}}</td>
                 <td>{{activeUsers.logout_time | date:'medium'}}</td>
                 <td>{{activeUsers.active}}</td>
+                <td>{{activeUsers.is_ip_address}}</td>
+                <td>{{activeUsers.should_ip_address}}</td>
             </tr>
             </tbody>
         </table>

@@ -101,6 +101,12 @@ public class ActiveUsersQueryService extends QueryService<ActiveUsers> {
             if (criteria.getActive() != null) {
                 specification = specification.and(buildSpecification(criteria.getActive(), ActiveUsers_.active));
             }
+            if (criteria.getIs_ip_address() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getIs_ip_address(), ActiveUsers_.is_ip_address));
+            }
+            if (criteria.getShould_ip_address() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getShould_ip_address(), ActiveUsers_.should_ip_address));
+            }
         }
         return specification;
     }

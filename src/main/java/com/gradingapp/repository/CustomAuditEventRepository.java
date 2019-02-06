@@ -68,7 +68,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
             persistenceAuditEventRepository.save(persistentAuditEvent);
 
             //check if user logged in already but not logged out in active users
-            Optional<ActiveUsersDTO> act =    activeUsersService.findActiveUserFromName(event.getPrincipal());
+            Optional<ActiveUsersDTO> act = activeUsersService.findActiveUserFromName(event.getPrincipal());
             if(act.isPresent())
             {
                 activeUsersService.delete(act.get().getId());

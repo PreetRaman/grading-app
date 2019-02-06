@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new ActiveUsers(0, 'AAAAAAA', currentDate, currentDate, false);
+            elemDefault = new ActiveUsers(0, 'AAAAAAA', currentDate, currentDate, false, 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -76,7 +76,9 @@ describe('Service Tests', () => {
                         username: 'BBBBBB',
                         login_time: currentDate.format(DATE_TIME_FORMAT),
                         logout_time: currentDate.format(DATE_TIME_FORMAT),
-                        active: true
+                        active: true,
+                        is_ip_address: 'BBBBBB',
+                        should_ip_address: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -102,7 +104,9 @@ describe('Service Tests', () => {
                         username: 'BBBBBB',
                         login_time: currentDate.format(DATE_TIME_FORMAT),
                         logout_time: currentDate.format(DATE_TIME_FORMAT),
-                        active: true
+                        active: true,
+                        is_ip_address: 'BBBBBB',
+                        should_ip_address: 'BBBBBB'
                     },
                     elemDefault
                 );

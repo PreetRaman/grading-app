@@ -35,6 +35,12 @@ public class ActiveUsers implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "is_ip_address")
+    private String is_ip_address;
+
+    @Column(name = "should_ip_address")
+    private String should_ip_address;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -95,6 +101,32 @@ public class ActiveUsers implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    public String getIs_ip_address() {
+        return is_ip_address;
+    }
+
+    public ActiveUsers is_ip_address(String is_ip_address) {
+        this.is_ip_address = is_ip_address;
+        return this;
+    }
+
+    public void setIs_ip_address(String is_ip_address) {
+        this.is_ip_address = is_ip_address;
+    }
+
+    public String getShould_ip_address() {
+        return should_ip_address;
+    }
+
+    public ActiveUsers should_ip_address(String should_ip_address) {
+        this.should_ip_address = should_ip_address;
+        return this;
+    }
+
+    public void setShould_ip_address(String should_ip_address) {
+        this.should_ip_address = should_ip_address;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -125,6 +157,8 @@ public class ActiveUsers implements Serializable {
             ", login_time='" + getLogin_time() + "'" +
             ", logout_time='" + getLogout_time() + "'" +
             ", active='" + isActive() + "'" +
+            ", is_ip_address='" + getIs_ip_address() + "'" +
+            ", should_ip_address='" + getShould_ip_address() + "'" +
             "}";
     }
 }

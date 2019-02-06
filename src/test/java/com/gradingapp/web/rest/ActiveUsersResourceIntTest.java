@@ -60,17 +60,17 @@ public class ActiveUsersResourceIntTest {
     private static final Boolean DEFAULT_ACTIVE = false;
     private static final Boolean UPDATED_ACTIVE = true;
 
+    private static final String DEFAULT_IS_IP_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_IS_IP_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SHOULD_IP_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_SHOULD_IP_ADDRESS = "BBBBBBBBBB";
+
     @Autowired
     private ActiveUsersRepository activeUsersRepository;
 
     @Autowired
     private ActiveUsersMapper activeUsersMapper;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private FdaiNummerRepository fdaiNummerRepository;
 
     @Autowired
     private ActiveUsersService activeUsersService;
@@ -86,6 +86,12 @@ public class ActiveUsersResourceIntTest {
 
     @Autowired
     private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private FdaiNummerRepository fdaiNummerRepository;
 
     @Autowired
     private EntityManager em;
@@ -116,7 +122,9 @@ public class ActiveUsersResourceIntTest {
             .username(DEFAULT_USERNAME)
             .login_time(DEFAULT_LOGIN_TIME)
             .logout_time(DEFAULT_LOGOUT_TIME)
-            .active(DEFAULT_ACTIVE);
+            .active(DEFAULT_ACTIVE)
+            .is_ip_address(DEFAULT_IS_IP_ADDRESS)
+            .should_ip_address(DEFAULT_SHOULD_IP_ADDRESS);
         return activeUsers;
     }
 
@@ -145,6 +153,8 @@ public class ActiveUsersResourceIntTest {
         assertThat(testActiveUsers.getLogin_time()).isEqualTo(DEFAULT_LOGIN_TIME);
         assertThat(testActiveUsers.getLogout_time()).isEqualTo(DEFAULT_LOGOUT_TIME);
         assertThat(testActiveUsers.isActive()).isEqualTo(DEFAULT_ACTIVE);
+        assertThat(testActiveUsers.getIs_ip_address()).isEqualTo(DEFAULT_IS_IP_ADDRESS);
+        assertThat(testActiveUsers.getShould_ip_address()).isEqualTo(DEFAULT_SHOULD_IP_ADDRESS);
     }
 
     @Test
@@ -181,7 +191,9 @@ public class ActiveUsersResourceIntTest {
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].login_time").value(hasItem(DEFAULT_LOGIN_TIME.toString())))
             .andExpect(jsonPath("$.[*].logout_time").value(hasItem(DEFAULT_LOGOUT_TIME.toString())))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].is_ip_address").value(hasItem(DEFAULT_IS_IP_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].should_ip_address").value(hasItem(DEFAULT_SHOULD_IP_ADDRESS.toString())));
     }
 
     @Test
@@ -198,7 +210,9 @@ public class ActiveUsersResourceIntTest {
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()))
             .andExpect(jsonPath("$.login_time").value(DEFAULT_LOGIN_TIME.toString()))
             .andExpect(jsonPath("$.logout_time").value(DEFAULT_LOGOUT_TIME.toString()))
-            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()))
+            .andExpect(jsonPath("$.is_ip_address").value(DEFAULT_IS_IP_ADDRESS.toString()))
+            .andExpect(jsonPath("$.should_ip_address").value(DEFAULT_SHOULD_IP_ADDRESS.toString()));
     }
 
     @Test
@@ -356,6 +370,84 @@ public class ActiveUsersResourceIntTest {
         // Get all the activeUsersList where active is null
         defaultActiveUsersShouldNotBeFound("active.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByIs_ip_addressIsEqualToSomething() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where is_ip_address equals to DEFAULT_IS_IP_ADDRESS
+        defaultActiveUsersShouldBeFound("is_ip_address.equals=" + DEFAULT_IS_IP_ADDRESS);
+
+        // Get all the activeUsersList where is_ip_address equals to UPDATED_IS_IP_ADDRESS
+        defaultActiveUsersShouldNotBeFound("is_ip_address.equals=" + UPDATED_IS_IP_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByIs_ip_addressIsInShouldWork() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where is_ip_address in DEFAULT_IS_IP_ADDRESS or UPDATED_IS_IP_ADDRESS
+        defaultActiveUsersShouldBeFound("is_ip_address.in=" + DEFAULT_IS_IP_ADDRESS + "," + UPDATED_IS_IP_ADDRESS);
+
+        // Get all the activeUsersList where is_ip_address equals to UPDATED_IS_IP_ADDRESS
+        defaultActiveUsersShouldNotBeFound("is_ip_address.in=" + UPDATED_IS_IP_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByIs_ip_addressIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where is_ip_address is not null
+        defaultActiveUsersShouldBeFound("is_ip_address.specified=true");
+
+        // Get all the activeUsersList where is_ip_address is null
+        defaultActiveUsersShouldNotBeFound("is_ip_address.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByShould_ip_addressIsEqualToSomething() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where should_ip_address equals to DEFAULT_SHOULD_IP_ADDRESS
+        defaultActiveUsersShouldBeFound("should_ip_address.equals=" + DEFAULT_SHOULD_IP_ADDRESS);
+
+        // Get all the activeUsersList where should_ip_address equals to UPDATED_SHOULD_IP_ADDRESS
+        defaultActiveUsersShouldNotBeFound("should_ip_address.equals=" + UPDATED_SHOULD_IP_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByShould_ip_addressIsInShouldWork() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where should_ip_address in DEFAULT_SHOULD_IP_ADDRESS or UPDATED_SHOULD_IP_ADDRESS
+        defaultActiveUsersShouldBeFound("should_ip_address.in=" + DEFAULT_SHOULD_IP_ADDRESS + "," + UPDATED_SHOULD_IP_ADDRESS);
+
+        // Get all the activeUsersList where should_ip_address equals to UPDATED_SHOULD_IP_ADDRESS
+        defaultActiveUsersShouldNotBeFound("should_ip_address.in=" + UPDATED_SHOULD_IP_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActiveUsersByShould_ip_addressIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        activeUsersRepository.saveAndFlush(activeUsers);
+
+        // Get all the activeUsersList where should_ip_address is not null
+        defaultActiveUsersShouldBeFound("should_ip_address.specified=true");
+
+        // Get all the activeUsersList where should_ip_address is null
+        defaultActiveUsersShouldNotBeFound("should_ip_address.specified=false");
+    }
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -367,7 +459,9 @@ public class ActiveUsersResourceIntTest {
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())))
             .andExpect(jsonPath("$.[*].login_time").value(hasItem(DEFAULT_LOGIN_TIME.toString())))
             .andExpect(jsonPath("$.[*].logout_time").value(hasItem(DEFAULT_LOGOUT_TIME.toString())))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].is_ip_address").value(hasItem(DEFAULT_IS_IP_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].should_ip_address").value(hasItem(DEFAULT_SHOULD_IP_ADDRESS.toString())));
 
         // Check, that the count call also returns 1
         restActiveUsersMockMvc.perform(get("/api/active-users/count?sort=id,desc&" + filter))
@@ -418,7 +512,9 @@ public class ActiveUsersResourceIntTest {
             .username(UPDATED_USERNAME)
             .login_time(UPDATED_LOGIN_TIME)
             .logout_time(UPDATED_LOGOUT_TIME)
-            .active(UPDATED_ACTIVE);
+            .active(UPDATED_ACTIVE)
+            .is_ip_address(UPDATED_IS_IP_ADDRESS)
+            .should_ip_address(UPDATED_SHOULD_IP_ADDRESS);
         ActiveUsersDTO activeUsersDTO = activeUsersMapper.toDto(updatedActiveUsers);
 
         restActiveUsersMockMvc.perform(put("/api/active-users")
@@ -434,6 +530,8 @@ public class ActiveUsersResourceIntTest {
         assertThat(testActiveUsers.getLogin_time()).isEqualTo(UPDATED_LOGIN_TIME);
         assertThat(testActiveUsers.getLogout_time()).isEqualTo(UPDATED_LOGOUT_TIME);
         assertThat(testActiveUsers.isActive()).isEqualTo(UPDATED_ACTIVE);
+        assertThat(testActiveUsers.getIs_ip_address()).isEqualTo(UPDATED_IS_IP_ADDRESS);
+        assertThat(testActiveUsers.getShould_ip_address()).isEqualTo(UPDATED_SHOULD_IP_ADDRESS);
     }
 
     @Test

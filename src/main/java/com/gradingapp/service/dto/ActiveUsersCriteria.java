@@ -33,6 +33,10 @@ public class ActiveUsersCriteria implements Serializable {
 
     private BooleanFilter active;
 
+    private StringFilter is_ip_address;
+
+    private StringFilter should_ip_address;
+
     public ActiveUsersCriteria() {
     }
 
@@ -76,6 +80,22 @@ public class ActiveUsersCriteria implements Serializable {
         this.active = active;
     }
 
+    public StringFilter getIs_ip_address() {
+        return is_ip_address;
+    }
+
+    public void setIs_ip_address(StringFilter is_ip_address) {
+        this.is_ip_address = is_ip_address;
+    }
+
+    public StringFilter getShould_ip_address() {
+        return should_ip_address;
+    }
+
+    public void setShould_ip_address(StringFilter should_ip_address) {
+        this.should_ip_address = should_ip_address;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -91,7 +111,9 @@ public class ActiveUsersCriteria implements Serializable {
             Objects.equals(username, that.username) &&
             Objects.equals(login_time, that.login_time) &&
             Objects.equals(logout_time, that.logout_time) &&
-            Objects.equals(active, that.active);
+            Objects.equals(active, that.active) &&
+            Objects.equals(is_ip_address, that.is_ip_address) &&
+            Objects.equals(should_ip_address, that.should_ip_address);
     }
 
     @Override
@@ -101,7 +123,9 @@ public class ActiveUsersCriteria implements Serializable {
         username,
         login_time,
         logout_time,
-        active
+        active,
+        is_ip_address,
+        should_ip_address
         );
     }
 
@@ -113,6 +137,8 @@ public class ActiveUsersCriteria implements Serializable {
                 (login_time != null ? "login_time=" + login_time + ", " : "") +
                 (logout_time != null ? "logout_time=" + logout_time + ", " : "") +
                 (active != null ? "active=" + active + ", " : "") +
+                (is_ip_address != null ? "is_ip_address=" + is_ip_address + ", " : "") +
+                (should_ip_address != null ? "should_ip_address=" + should_ip_address + ", " : "") +
             "}";
     }
 

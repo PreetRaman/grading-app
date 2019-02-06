@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -87,6 +88,12 @@ public class ActiveUsersService {
         log.debug("Request to get active user with name {}", name);
         return activeUsersRepository.findOneByUsername(name)
             .map(activeUsersMapper::toDto);
+    }
+
+    public List<ActiveUsersDTO> findAllFromName(String name) {
+        log.debug("Request to get active user with name {}", name);
+        List<ActiveUsers> list =  activeUsersRepository.findAllByUsername(name);
+        return activeUsersMapper.toDto(list);
     }
 
     /**

@@ -112,7 +112,6 @@ public class ActiveUsersResource {
     public ResponseEntity<List<ActiveUsersDTO>> getAllActiveUsers(ActiveUsersCriteria criteria, Pageable pageable) {
         log.debug("REST request to get ActiveUsers by criteria: {}", criteria);
         Page<ActiveUsersDTO> page = activeUsersQueryService.findByCriteria(criteria, pageable);
-
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/active-users");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -141,7 +140,6 @@ public class ActiveUsersResource {
     public ResponseEntity<ActiveUsersDTO> getActiveUsers(@PathVariable Long id) {
         log.debug("REST request to get ActiveUsers : {}", id);
         Optional<ActiveUsersDTO> activeUsersDTO = activeUsersService.findOne(id);
-
         return ResponseUtil.wrapOrNotFound(activeUsersDTO);
     }
 
@@ -166,7 +164,6 @@ public class ActiveUsersResource {
                 activeUsersDTO1.setActive(false);
                 activeUsersService.save(activeUsersDTO1);
             }
-
         }
     }
 
@@ -198,16 +195,15 @@ public class ActiveUsersResource {
         Optional<User> user1 = userService.getUserWithAuthoritiesByLogin(user);
         //current user id
 
-        //get from fdai_nummer list of all users with ladmin id
+        //get fdai_nummer list of all users with ladmin id
         List<FdaiNummer> fdaiNummers = fdaiNummerRepository.findAllByUser(user1.get());
 
         List<ActiveUsersDTO> list = new ArrayList<>();
         fdaiNummers.forEach(fdaiNummer ->  {
-                Optional<ActiveUsersDTO> fdaiNummer1 = activeUsersService.findActiveUserFromName(fdaiNummer.getFdainumber());
-                if(fdaiNummer1.isPresent())
-                {
-                    list.add(fdaiNummer1.get());
-                }
+                List<ActiveUsersDTO> fdaiNummerlist = activeUsersService.findAllFromName(fdaiNummer.getFdainumber());
+            fdaiNummerlist.forEach(fdaiNummer3 -> {
+                    list.add(fdaiNummer3);
+                });
         });
 
         return list;

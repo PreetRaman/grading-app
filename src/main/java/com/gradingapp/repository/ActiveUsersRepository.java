@@ -21,4 +21,6 @@ public interface ActiveUsersRepository extends JpaRepository<ActiveUsers, Long>,
 
     public Optional<ActiveUsers> findOneByUsername(String username);
 
+    List<ActiveUsers> findAllByUsername(String username);
+
 }

@@ -2,7 +2,7 @@
     "gradingApp": {
         "activeUsers": {
             "home": {
-                "title": "Active Students",
+                "title": "Active Users",
                 "createLabel": "Active Users erstellen",
                 "createOrEditLabel": "Active Users erstellen oder bearbeiten"
             },
@@ -18,7 +18,9 @@
             "username": "Username",
             "login_time": "Login Time",
             "logout_time": "Logout Time",
-            "active": "Active"
+            "active": "Active",
+            "is_ip_address": "Is Ip Address",
+            "should_ip_address": "Should Ip Address"
         }
     }
 }

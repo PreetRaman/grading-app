@@ -68,6 +68,7 @@ public class FdaiNummerResource {
         FdaiNummer result = fdaiNummerRepository.save(fdaiNummer);
         ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
         activeUsersDTO.setUsername(fdaiNummer.getFdainumber());
+        activeUsersDTO.setShould_ip_address(fdaiNummer.getIp());
         activeUsersService.save(activeUsersDTO);
         return ResponseEntity.created(new URI("/api/fdai-nummers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
