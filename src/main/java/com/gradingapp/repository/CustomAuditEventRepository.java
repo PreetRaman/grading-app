@@ -6,6 +6,7 @@ import com.gradingapp.domain.PersistentAuditEvent;
 
 import com.gradingapp.service.ActiveUsersService;
 import com.gradingapp.service.dto.ActiveUsersDTO;
+import org.omg.CORBA.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -69,8 +70,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
             //check if user logged in already but not logged out in active users
             Optional<ActiveUsersDTO> act = activeUsersService.findActiveUserFromName(event.getPrincipal());
-            if(act.isPresent())
-            {
+            if(act.isPresent()) {
                 activeUsersService.delete(act.get().getId());
             }
             //set active user to be logged in if not present above

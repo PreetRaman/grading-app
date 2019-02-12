@@ -1,12 +1,16 @@
 package com.gradingapp.web.rest;
 
+import com.gradingapp.repository.ActiveUsersRepository;
 import com.gradingapp.security.jwt.JWTFilter;
 import com.gradingapp.security.jwt.TokenProvider;
+import com.gradingapp.service.ActiveUsersService;
+import com.gradingapp.service.util.WebUtils;
 import com.gradingapp.web.rest.vm.LoginVM;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -29,18 +34,25 @@ public class UserJWTController {
 
     private final AuthenticationManager authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    private final ActiveUsersService activeUsersService;
+
+    @Autowired
+    private WebUtils webUtils;
+
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, ActiveUsersService activeUsersService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+        this.activeUsersService = activeUsersService;
     }
 
     @PostMapping("/authenticate")
     @Timed
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
-
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request) {
+        String ipaddress = webUtils.getClientIp();
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
 
+        activeUsersService.saveIPaddressForUsername(ipaddress, loginVM.getUsername());
         Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();

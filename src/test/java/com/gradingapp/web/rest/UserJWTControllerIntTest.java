@@ -4,6 +4,7 @@ import com.gradingapp.GradingApp;
 import com.gradingapp.domain.User;
 import com.gradingapp.repository.UserRepository;
 import com.gradingapp.security.jwt.TokenProvider;
+import com.gradingapp.service.ActiveUsersService;
 import com.gradingapp.web.rest.errors.ExceptionTranslator;
 import com.gradingapp.web.rest.vm.LoginVM;
 import org.junit.Before;
@@ -50,11 +51,14 @@ public class UserJWTControllerIntTest {
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    @Autowired
+    private ActiveUsersService activeUsersService;
+
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager);
+        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager, activeUsersService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .setControllerAdvice(exceptionTranslator)
             .build();

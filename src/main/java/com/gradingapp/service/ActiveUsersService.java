@@ -108,4 +108,21 @@ public class ActiveUsersService {
         return activeUsersRepository.findOneByUsername(username)
             .map(activeUsersMapper::toDto);
     }
+
+    @Transactional
+    public void saveIPaddressForUsername(String username, String ipaddress) {
+        log.debug("Request to get Ip by username for a single ID");
+        Optional<ActiveUsers> activeUsers = activeUsersRepository.findOneByUsername(username);
+        ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
+        if(activeUsers.isPresent()) {
+            ActiveUsers activeUsers1 = activeUsers.get();
+            activeUsers1.setIs_ip_address(ipaddress);
+            activeUsersDTO = activeUsersMapper.toDto(activeUsers1);
+        } else {
+
+            activeUsersDTO.setIs_ip_address(ipaddress);
+            activeUsersDTO.setUsername(username);
+        }
+        activeUsersRepository.save(activeUsersMapper.toEntity(activeUsersDTO));
+    }
 }
