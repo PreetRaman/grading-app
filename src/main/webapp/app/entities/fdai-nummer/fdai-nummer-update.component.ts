@@ -15,6 +15,7 @@ import { IUser, UserService } from 'app/core';
 export class FdaiNummerUpdateComponent implements OnInit {
     fdaiNummer: IFdaiNummer;
     isSaving: boolean;
+    file: File;
 
     users: IUser[];
 
@@ -50,8 +51,12 @@ export class FdaiNummerUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.fdaiNummer.id !== undefined) {
-            this.subscribeToSaveResponse(this.fdaiNummerService.update(this.fdaiNummer));
+        if (this.file) {
+            this.fdaiNummerService.createImport(this.fdaiNummer.user.login, this.file).subscribe((res: any) => {
+                console.log(res);
+            });
+        } else if (this.fdaiNummer.id !== undefined) {
+                this.subscribeToSaveResponse(this.fdaiNummerService.update(this.fdaiNummer));
         } else {
             this.subscribeToSaveResponse(this.fdaiNummerService.create(this.fdaiNummer));
         }

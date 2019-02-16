@@ -149,8 +149,8 @@ public class FdaiNummerResource {
     @PostMapping("/fdai-nummers/import/{login}")
     @Timed
     public ResponseEntity<List<FdaiNummer>> createFdaiNummerList(@RequestBody MultipartFile file, @PathVariable String login) throws URISyntaxException, IOException {
-        log.debug("REST request to save FdaiNummer : {}", file);
-        if (file.isEmpty() || login.equals(null) || login.isEmpty()) {
+        log.debug("REST request to save FdaiNummer : {}", login);
+        if ( null == login || login.isEmpty()) {
             throw new BadRequestAlertException("A new fdaiNummer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         List<FdaiNummer> fdaiNummers = new ArrayList<>();

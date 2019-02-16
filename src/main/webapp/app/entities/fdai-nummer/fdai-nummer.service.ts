@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<IFdaiNummer[]>;
 @Injectable({ providedIn: 'root' })
 export class FdaiNummerService {
     public resourceUrl = SERVER_API_URL + 'api/fdai-nummers';
+    public importUrl = SERVER_API_URL + 'api/fdai-nummers/import';
 
     constructor(private http: HttpClient) {}
 
@@ -30,6 +31,15 @@ export class FdaiNummerService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<IFdaiNummer[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    createImport(login: String, file: File): Observable<EntityResponseType> {
+        const formData: FormData = new FormData();
+        formData.append('file', file, 'test');
+        HttpHeaders headers = new HttpHeaders();
+        headers.set('')
+
+        return this.http.post<any>(`${this.importUrl}/${login}`, formData, { observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
