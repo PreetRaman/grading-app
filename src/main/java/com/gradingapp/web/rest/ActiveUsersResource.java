@@ -208,4 +208,15 @@ public class ActiveUsersResource {
 
         return list;
     }
+
+    @GetMapping("/active-users/ip/{ip}")
+    @Timed
+    public ResponseEntity<List<ActiveUsersDTO>> saveIPActiveUser(@PathVariable String ip) {
+        log.debug("REST request to get ActiveUsers by criteria: {}");
+
+        // get current user
+        String user = SecurityUtils.getCurrentUserLogin().get();
+        activeUsersService.saveIPaddressForUsername(ip, user);
+        return ResponseEntity.ok().build();
+    }
 }

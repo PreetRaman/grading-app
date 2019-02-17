@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbActiveModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { LoginModalService, Principal, Account } from 'app/core';
+import { Principal, Account } from 'app/core';
 import {LoginService} from '../core/login/login.service';
 import {Router} from '@angular/router';
 import {StateStorageService} from '../core/auth/state-storage.service';
+import {ActiveUsersService} from '../entities/active-users/active-users.service';
 
 @Component({
     selector: 'jhi-home',
@@ -25,7 +25,8 @@ export class HomeComponent implements OnInit {
         private eventManager: JhiEventManager,
         private loginService: LoginService,
         private router: Router,
-        private stateStorageService: StateStorageService
+        private stateStorageService: StateStorageService,
+        public activeUserService: ActiveUsersService
     ) {
         this.credentials = {};
     }
@@ -63,6 +64,8 @@ export class HomeComponent implements OnInit {
                     this.router.navigate(['']);
                 }
 
+                this.findIp();
+
                 this.eventManager.broadcast({
                     name: 'authenticationSuccess',
                     content: 'Sending Authentication Success'
@@ -80,5 +83,24 @@ export class HomeComponent implements OnInit {
             .catch(() => {
                 this.authenticationError = true;
             });
+    }
+
+    findIp() {
+        window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        const pc = new RTCPeerConnection({iceServers:[]}),
+            noop = function() {};
+
+        pc.createDataChannel('');
+        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
+        pc.onicecandidate = function(ice) {
+            if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
+
+            const myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+            this.activeUserService.sendClientIp(myIP).subscribe(res => {
+                console.log(res);
+            });
+            console.log(myIP);
+            pc.onicecandidate = noop;
+        }
     }
 }

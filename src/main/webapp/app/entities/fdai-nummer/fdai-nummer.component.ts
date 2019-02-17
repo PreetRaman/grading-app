@@ -52,6 +52,15 @@ export class FdaiNummerComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe('fdaiNummerListModification', response => this.loadAll());
     }
 
+    clearData() {
+        this.fdaiNummerService.deleteAll().subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'fdaiNummerListModification',
+                content: 'Deleted fdaiNummers'
+            });
+        });
+    }
+
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }

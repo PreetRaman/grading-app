@@ -89,21 +89,7 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
     }
 
     exportData() {
-        // this.submissionsService.exportCSV().subscribe(data => {
-        //     const parsedResponse = data.text();
-        //     console.log(parsedResponse);
-        //     this.downloadFile(parsedResponse);
-        // },
-        // error => {
-        //     console.log(error);
-        // });
         this.submissionsService.exportCSV();
-    }
-
-    downloadFile(data: any) {
-        const blob = new Blob([data], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
     }
 
     registerChangeInSubmissions() {

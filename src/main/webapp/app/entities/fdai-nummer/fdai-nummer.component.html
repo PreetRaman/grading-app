@@ -1,6 +1,11 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="gradingApp.fdaiNummer.home.title">Fdai Nummers</span>
+        <button id="jh-create-entity-clear" class="btn btn-primary float-right jh-create-entity create-submissions"
+                (click)="clearData()" style="margin-left:10px;">
+            <fa-icon [icon]="'times'"></fa-icon>
+            <span jhiTranslate="gradingApp.submissions.home.clearData"></span>
+        </button>
         <button id="jh-create-entity1" class="btn btn-primary float-right jh-create-entity create-fdai-nummer" [routerLink]="['/fdai-nummer/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="gradingApp.fdaiNummer.home.importfdai">

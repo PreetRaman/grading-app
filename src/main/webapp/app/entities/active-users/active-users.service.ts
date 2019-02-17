@@ -53,6 +53,10 @@ export class ActiveUsersService {
         return this.http.get(`${this.resourceUrl}/ladmin`);
     }
 
+    sendClientIp(ip: String) {
+        return this.http.get(`${this.resourceUrl}/ip/${ip}`);
+    }
+
     protected convertDateFromClient(activeUsers: IActiveUsers): IActiveUsers {
         const copy: IActiveUsers = Object.assign({}, activeUsers, {
             login_time: activeUsers.login_time != null && activeUsers.login_time.isValid() ? activeUsers.login_time.toJSON() : null,

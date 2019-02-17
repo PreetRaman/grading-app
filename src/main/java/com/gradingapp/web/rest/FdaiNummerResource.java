@@ -138,6 +138,16 @@ public class FdaiNummerResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+
+    @DeleteMapping("/fdai-nummers")
+    @Timed
+    public ResponseEntity<Void> deleteAllFdaiNummer() {
+        log.debug("REST request to delete FdaiNummers : {}");
+
+        fdaiNummerRepository.deleteAll();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, "all")).build();
+    }
+
     /**
      * POST  /fdai-nummers : Create a new list of fdaiNummer.
      *

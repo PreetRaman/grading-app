@@ -167,25 +167,16 @@ public class SubmissionsResource {
     /**
      * Handle request to download a CSV document
      */
-    @Secured({ AuthoritiesConstants.LADMIN })
+    @Secured({ AuthoritiesConstants.PROFESSOR })
     @RequestMapping(value = "/submissions/download", method = RequestMethod.GET, produces = "text/csv")
     public void download(HttpServletResponse response) throws IOException {
-        // get current user
-        String currentUser = SecurityUtils.getCurrentUserLogin().get();
-        Optional<User> user = userService.getUserWithAuthoritiesByLogin(currentUser);
-
-        // get list of FDAI numbers with curent id
-        List<FdaiNummer> fdaiNummers = fdaiNummerRepository.findAllByUser(user.get());
 
         List<Submissions> listSubmissions = new ArrayList<>();
-        fdaiNummers.forEach(fdaiNummer -> {
-            List<Submissions> submissions1 = submissionsRepository.findAllByFdaiNumber(fdaiNummer.getFdainumber());
-            submissions1.forEach(subm -> {
-                listSubmissions.add(subm);
-            });
-        });
-        // List<Submissions> submissionsList = submissionsRepository.findAll();
 
+        List<Submissions> submissions1 = submissionsRepository.findAll();
+        submissions1.forEach(subm -> {
+            listSubmissions.add(subm);
+        });
         response.setContentType("text/plain; charset=utf-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "download.csv" + "\"");
 

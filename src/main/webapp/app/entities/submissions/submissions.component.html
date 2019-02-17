@@ -3,7 +3,7 @@
     <br/>
     <div class="table-responsive" *ngIf="submissions">
         <div *jhiHasAnyAuthority="'ROLE_PROFESSOR'">
-            <button id="jh-create-entity-clear" class="btn btn-primary float-right jh-create-entity create-submissions"
+            <button id="jh-create-entity-clear" class="btn btn-primary float-right jh-create-entity"
                     (click)="clearData()">
                 <fa-icon [icon]="'times'"></fa-icon>
                 <span jhiTranslate="gradingApp.submissions.home.clearData"></span>
