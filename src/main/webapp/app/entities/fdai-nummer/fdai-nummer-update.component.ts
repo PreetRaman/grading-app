@@ -37,29 +37,35 @@ export class FdaiNummerUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-        /*this.userService.query().subscribe(
-            (res: HttpResponse<IUser[]>) => {
-                this.users = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );*/
     }
 
     previousState() {
         window.history.back();
     }
 
-    save() {
-        this.isSaving = true;
-        if (this.file) {
-            this.fdaiNummerService.createImport(this.fdaiNummer.user.login, this.file).subscribe((res: any) => {
-                console.log(res);
-            });
-        } else if (this.fdaiNummer.id !== undefined) {
-                this.subscribeToSaveResponse(this.fdaiNummerService.update(this.fdaiNummer));
-        } else {
-            this.subscribeToSaveResponse(this.fdaiNummerService.create(this.fdaiNummer));
-        }
+    // save() {
+    //     this.isSaving = true;
+    //     if (this.file) {
+    //         let reader: FileReader =  new FileReader();
+    //         reader.addEventListener('load', () => {
+    //             this.file = reader.result;
+    //             this.fdaiNummerService.createImport(this.fdaiNummer.user.login, this.file).subscribe((res: any) => {
+    //                 console.log(res);
+    //             });
+    //         }, false);
+    //         reader.readAsDataURL(this.file);
+    //     } else if (this.fdaiNummer.id !== undefined) {
+    //             this.subscribeToSaveResponse(this.fdaiNummerService.update(this.fdaiNummer));
+    //     } else {
+    //         this.subscribeToSaveResponse(this.fdaiNummerService.create(this.fdaiNummer));
+    //     }
+    // }
+
+    importCsv(event: any) {
+        this.fdaiNummerService.createImport(this.fdaiNummer.user.login, event.target.files[0]).subscribe((res:any) => {
+            console.log(res);
+        });
+        window.history.back();
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IFdaiNummer>>) {

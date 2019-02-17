@@ -35,11 +35,8 @@ export class FdaiNummerService {
 
     createImport(login: String, file: File): Observable<EntityResponseType> {
         const formData: FormData = new FormData();
-        formData.append('file', file, 'test');
-        HttpHeaders headers = new HttpHeaders();
-        headers.set('')
-
-        return this.http.post<any>(`${this.importUrl}/${login}`, formData, { observe: 'response' });
+        formData.append('file', file, file.name);
+        return this.http.post<any>(`${this.importUrl}/${login}`, formData);
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

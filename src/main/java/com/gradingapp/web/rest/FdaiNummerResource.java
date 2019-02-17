@@ -148,7 +148,7 @@ public class FdaiNummerResource {
     @Transactional
     @PostMapping("/fdai-nummers/import/{login}")
     @Timed
-    public ResponseEntity<List<FdaiNummer>> createFdaiNummerList(@RequestBody MultipartFile file, @PathVariable String login) throws URISyntaxException, IOException {
+    public ResponseEntity<List<FdaiNummer>> createFdaiNummerList(@RequestParam MultipartFile file, @PathVariable String login) throws URISyntaxException, IOException {
         log.debug("REST request to save FdaiNummer : {}", login);
         if ( null == login || login.isEmpty()) {
             throw new BadRequestAlertException("A new fdaiNummer cannot already have an ID", ENTITY_NAME, "idexists");
@@ -170,12 +170,17 @@ public class FdaiNummerResource {
 
         // get user by login
         Optional<User> user = userService.getUserByLogin(login);
-        if(user.isPresent()) {
+        if(user.isPresent()) { //ladmin get if present
             fdaiNummers.forEach(fdaiNummer -> {
                 fdaiNummer.setUser(user.get());
                 result.add(fdaiNummerRepository.save(fdaiNummer)) ;
+                ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
+                activeUsersDTO.setUsername(fdaiNummer.getFdainumber());
+                activeUsersDTO.setShould_ip_address(fdaiNummer.getIp());
+                activeUsersService.save(activeUsersDTO);
             });
         }
+
         return ResponseEntity.created(new URI("/api/fdai-nummers/import" + result.size()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, String.valueOf(result.size())))
             .body(result);
