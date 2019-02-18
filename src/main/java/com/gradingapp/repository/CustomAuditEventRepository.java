@@ -71,14 +71,9 @@ public class CustomAuditEventRepository implements AuditEventRepository {
             //check if user logged in already but not logged out in active users
             Optional<ActiveUsersDTO> act = activeUsersService.findActiveUserFromName(event.getPrincipal());
             if(act.isPresent()) {
-                activeUsersService.delete(act.get().getId());
+                //set active user to be logged in if not present above
+                activeUsersService.updateLoginTime(event.getPrincipal(), event.getTimestamp());
             }
-            //set active user to be logged in if not present above
-            ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
-            activeUsersDTO.setActive(true);
-            activeUsersDTO.setLogin_time(event.getTimestamp());
-            activeUsersDTO.setUsername(event.getPrincipal());
-            activeUsersService.save(activeUsersDTO);
         }
     }
 

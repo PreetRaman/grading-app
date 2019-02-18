@@ -213,10 +213,9 @@ public class ActiveUsersResource {
     @Timed
     public ResponseEntity<List<ActiveUsersDTO>> saveIPActiveUser(@PathVariable String ip) {
         log.debug("REST request to get ActiveUsers by criteria: {}");
-
         // get current user
         String user = SecurityUtils.getCurrentUserLogin().get();
-        activeUsersService.saveIPaddressForUsername(ip, user);
+        activeUsersService.saveIPaddressForUsername(user, ip);
         return ResponseEntity.ok().build();
     }
 }

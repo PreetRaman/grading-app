@@ -5,7 +5,7 @@ import { Principal, Account } from 'app/core';
 import {LoginService} from '../core/login/login.service';
 import {Router} from '@angular/router';
 import {StateStorageService} from '../core/auth/state-storage.service';
-import {ActiveUsersService} from '../entities/active-users/active-users.service';
+import {HomeService} from './home.service';
 
 @Component({
     selector: 'jhi-home',
@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
+    myIP: string;
 
     constructor(
         private principal: Principal,
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
         private loginService: LoginService,
         private router: Router,
         private stateStorageService: StateStorageService,
-        public activeUserService: ActiveUsersService
+        private homeService: HomeService
     ) {
         this.credentials = {};
     }
@@ -63,16 +64,16 @@ export class HomeComponent implements OnInit {
                 if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
                     this.router.navigate(['']);
                 }
-
-                this.findIp();
-
+                this.homeService.sendClientIp(ClientIP).subscribe(res => {
+                    console.log(res);
+                });
                 this.eventManager.broadcast({
                     name: 'authenticationSuccess',
                     content: 'Sending Authentication Success'
                 });
 
                 // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-                // since login is succesful, go to stored previousState and clear previousState
+                // since login is successful, go to stored previousState and clear previousState
                 const redirect = true;
                 if (redirect) {
                     this.stateStorageService.getUrl();
@@ -83,24 +84,5 @@ export class HomeComponent implements OnInit {
             .catch(() => {
                 this.authenticationError = true;
             });
-    }
-
-    findIp() {
-        window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-        const pc = new RTCPeerConnection({iceServers:[]}),
-            noop = function() {};
-
-        pc.createDataChannel('');
-        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
-        pc.onicecandidate = function(ice) {
-            if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
-
-            const myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-            this.activeUserService.sendClientIp(myIP).subscribe(res => {
-                console.log(res);
-            });
-            console.log(myIP);
-            pc.onicecandidate = noop;
-        }
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,16 +114,22 @@ public class ActiveUsersService {
     public void saveIPaddressForUsername(String username, String ipaddress) {
         log.debug("Request to get Ip by username for a single ID");
         Optional<ActiveUsers> activeUsers = activeUsersRepository.findOneByUsername(username);
-        ActiveUsersDTO activeUsersDTO = new ActiveUsersDTO();
         if(activeUsers.isPresent()) {
             ActiveUsers activeUsers1 = activeUsers.get();
             activeUsers1.setIs_ip_address(ipaddress);
-            activeUsersDTO = activeUsersMapper.toDto(activeUsers1);
-        } else {
-
-            activeUsersDTO.setIs_ip_address(ipaddress);
-            activeUsersDTO.setUsername(username);
+            activeUsersRepository.save(activeUsers1);
         }
-        activeUsersRepository.save(activeUsersMapper.toEntity(activeUsersDTO));
+    }
+
+    @Transactional
+    public void updateLoginTime(String username, Instant login_time) {
+        log.debug("Update user login time");
+        Optional<ActiveUsers> activeUsers = activeUsersRepository.findOneByUsername(username);
+        if(activeUsers.isPresent()) {
+            ActiveUsers activeUsers1 = activeUsers.get();
+            activeUsers1.setActive(true);
+            activeUsers1.setLogin_time(login_time);
+            activeUsersRepository.save(activeUsers1);
+        }
     }
 }
