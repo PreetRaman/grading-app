@@ -4,6 +4,7 @@ import com.gradingapp.domain.ActiveUsers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ActiveUsersRepository extends JpaRepository<ActiveUsers, Long>,
 
     List<ActiveUsers> findAllByUsername(String username);
 
+    @Query("select activeUsers from ActiveUsers activeUsers where activeUsers.is_ip_address = :is_ip_address")
+    List<ActiveUsers> findAllByIs_ip_address(@Param("is_ip_address") String is_ip_address);
 }

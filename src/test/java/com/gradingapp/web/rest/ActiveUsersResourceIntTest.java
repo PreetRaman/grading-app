@@ -103,7 +103,7 @@ public class ActiveUsersResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ActiveUsersResource activeUsersResource = new ActiveUsersResource(activeUsersService, activeUsersQueryService, userService, fdaiNummerRepository);
+        final ActiveUsersResource activeUsersResource = new ActiveUsersResource(activeUsersService, activeUsersQueryService, userService, fdaiNummerRepository, activeUsersRepository);
         this.restActiveUsersMockMvc = MockMvcBuilders.standaloneSetup(activeUsersResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

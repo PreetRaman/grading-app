@@ -1,7 +1,11 @@
 package com.gradingapp.service;
 
 import com.gradingapp.domain.ActiveUsers;
+import com.gradingapp.domain.FdaiNummer;
+import com.gradingapp.domain.User;
 import com.gradingapp.repository.ActiveUsersRepository;
+import com.gradingapp.repository.FdaiNummerRepository;
+import com.gradingapp.security.SecurityUtils;
 import com.gradingapp.service.dto.ActiveUsersDTO;
 import com.gradingapp.service.mapper.ActiveUsersMapper;
 import org.slf4j.Logger;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +34,15 @@ public class ActiveUsersService {
 
     private final ActiveUsersMapper activeUsersMapper;
 
-    public ActiveUsersService(ActiveUsersRepository activeUsersRepository, ActiveUsersMapper activeUsersMapper) {
+    private final UserService userService;
+
+    private final FdaiNummerRepository fdaiNummerRepository;
+
+    public ActiveUsersService(ActiveUsersRepository activeUsersRepository, ActiveUsersMapper activeUsersMapper, UserService userService, FdaiNummerRepository fdaiNummerRepository) {
         this.activeUsersRepository = activeUsersRepository;
         this.activeUsersMapper = activeUsersMapper;
+        this.userService = userService;
+        this.fdaiNummerRepository = fdaiNummerRepository;
     }
 
     /**
@@ -130,6 +141,58 @@ public class ActiveUsersService {
             activeUsers1.setActive(true);
             activeUsers1.setLogin_time(login_time);
             activeUsersRepository.save(activeUsers1);
+        } else {
+            ActiveUsers activeUsers1 = new ActiveUsers();
+            activeUsers1.setLogin_time(login_time);
+            activeUsers1.setUsername(username);
+            activeUsersRepository.save(activeUsers1);
         }
     }
+
+    @Transactional
+    public List<ActiveUsersDTO> getNotAssignedActiveUsersOfLadmin() {
+        log.debug("Get not assigned list of active users for lab admin");
+
+        // get Lab admin
+        String user = SecurityUtils.getCurrentUserLogin().get();
+        Optional<User> ladmin = userService.getUserWithAuthoritiesByLogin(user);
+
+        // 1. get list of all IP address's assigned to ladmin
+        List<FdaiNummer> fdaiNummers = fdaiNummerRepository.findAllByUser(ladmin.get());
+
+        // 2. get active user having is_ip_address from above which user is not assigned to
+        List<ActiveUsers> activeUserlistWithAssignedIP = new ArrayList<>();
+        fdaiNummers.forEach(fdaiNummer -> {
+            List<ActiveUsers> activeUsers = activeUsersRepository.findAllByIs_ip_address(fdaiNummer.getIp());
+            activeUsers.forEach(activeUsers1 -> {
+                activeUserlistWithAssignedIP.add(activeUsers1);
+            });
+        });
+
+        // 3. get list of assigned users of Lab admin
+
+        List<ActiveUsersDTO> listassignedUsers = new ArrayList<>();
+        fdaiNummers.forEach(fdaiNummer ->  {
+            List<ActiveUsersDTO> fdaiNummerlist = this.findAllFromName(fdaiNummer.getFdainumber());
+            fdaiNummerlist.forEach(fdaiNummer3 -> {
+                listassignedUsers.add(fdaiNummer3);
+            });
+        });
+
+        // 4. filter the one'S which are assigned to ladmin
+        List<ActiveUsers> nonAssignedUsers = new ArrayList<>();
+        for (ActiveUsers activeUser : activeUserlistWithAssignedIP) {
+            Boolean found = false;
+            String username = activeUser.getUsername();
+            for (ActiveUsersDTO assignedUser : listassignedUsers) {
+                if(assignedUser.getUsername() == username) {
+                    found = true;
+                }
+            }
+            if(!found) {
+                nonAssignedUsers.add(activeUser);
+            }
+        }
+        return activeUsersMapper.toDto(nonAssignedUsers);
+      }
 }

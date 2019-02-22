@@ -17,6 +17,7 @@ import { ActiveUsersService } from './active-users.service';
 export class ActiveUsersComponent implements OnInit, OnDestroy {
     currentAccount: any;
     activeUsers: IActiveUsers[];
+    nonAssignedActiveUser: IActiveUsers[];
     error: any;
     success: any;
     eventSubscriber: Subscription;
@@ -52,8 +53,17 @@ export class ActiveUsersComponent implements OnInit, OnDestroy {
         this.activeUsersService.getUser().subscribe(
             res => {
                 this.activeUsers = res;
+                console.log(this.activeUsers);
             }
+        );
+    }
 
+    getNonAssignedUser() {
+        this.activeUsersService.getUnassignedUser().subscribe(
+            res => {
+                this.nonAssignedActiveUser = res;
+                console.log(this.nonAssignedActiveUser);
+            }
         );
     }
 
@@ -73,6 +83,7 @@ export class ActiveUsersComponent implements OnInit, OnDestroy {
             }
         });
         this.loadAll();
+        this.getNonAssignedUser();
     }
 
     clear() {
@@ -85,10 +96,12 @@ export class ActiveUsersComponent implements OnInit, OnDestroy {
             }
         ]);
         this.loadAll();
+        this.getNonAssignedUser();
     }
 
     ngOnInit() {
         this.loadAll();
+        this.getNonAssignedUser();
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
@@ -104,7 +117,12 @@ export class ActiveUsersComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInActiveUsers() {
-        this.eventSubscriber = this.eventManager.subscribe('activeUsersListModification', response => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('activeUsersListModification',
+            response => {
+                this.loadAll();
+                this.getNonAssignedUser();
+            }
+        );
     }
 
     sort() {

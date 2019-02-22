@@ -6,6 +6,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IFdaiNummer } from 'app/shared/model/fdai-nummer.model';
 import { Principal } from 'app/core';
 import { FdaiNummerService } from './fdai-nummer.service';
+import {ActiveUsersService} from '../active-users/active-users.service';
 
 @Component({
     selector: 'jhi-fdai-nummer',
@@ -20,7 +21,8 @@ export class FdaiNummerComponent implements OnInit, OnDestroy {
         private fdaiNummerService: FdaiNummerService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
+        private activeUsersService: ActiveUsersService
     ) {}
 
     loadAll() {
@@ -58,6 +60,9 @@ export class FdaiNummerComponent implements OnInit, OnDestroy {
                 name: 'fdaiNummerListModification',
                 content: 'Deleted fdaiNummers'
             });
+        });
+        this.activeUsersService.deleteAll().subscribe(res => {
+            console.log(res);
         });
     }
 

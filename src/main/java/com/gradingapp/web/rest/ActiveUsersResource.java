@@ -3,6 +3,7 @@ package com.gradingapp.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.gradingapp.domain.FdaiNummer;
 import com.gradingapp.domain.User;
+import com.gradingapp.repository.ActiveUsersRepository;
 import com.gradingapp.repository.FdaiNummerRepository;
 import com.gradingapp.security.SecurityUtils;
 import com.gradingapp.service.ActiveUsersService;
@@ -51,11 +52,14 @@ public class ActiveUsersResource {
 
     private FdaiNummerRepository fdaiNummerRepository;
 
-    public ActiveUsersResource(ActiveUsersService activeUsersService, ActiveUsersQueryService activeUsersQueryService, UserService userService, FdaiNummerRepository fdaiNummerRepository) {
+    private ActiveUsersRepository activeUsersRepository;
+
+    public ActiveUsersResource(ActiveUsersService activeUsersService, ActiveUsersQueryService activeUsersQueryService, UserService userService, FdaiNummerRepository fdaiNummerRepository, ActiveUsersRepository activeUsersRepository) {
         this.activeUsersService = activeUsersService;
         this.activeUsersQueryService = activeUsersQueryService;
         this.userService = userService;
         this.fdaiNummerRepository = fdaiNummerRepository;
+        this.activeUsersRepository = activeUsersRepository;
     }
 
     /**
@@ -182,6 +186,20 @@ public class ActiveUsersResource {
     }
 
     /**
+     * DELETEALL  /active-users/:id : delete the "id" activeUsers.
+     *
+     *
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/active-users")
+    @Timed
+    public ResponseEntity<Void> deleteAllActiveUsers() {
+        log.debug("REST request to delete All ActiveUsers : {}");
+        activeUsersRepository.deleteAll();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, "all")).build();
+    }
+
+    /**
      * GET  /active-users/:id/ladmin get id of the students belonging to LADMIN
      *
      *  the name of the activeUsersDTO to retrieve
@@ -207,6 +225,17 @@ public class ActiveUsersResource {
         });
 
         return list;
+    }
+
+
+    @GetMapping("/active-users/notassigned/ladmin")
+    @Timed
+    public List<ActiveUsersDTO> getNotAssignedLadminUsers(ActiveUsersCriteria criteria) {
+        log.debug("REST request to get ActiveUsers by ladmin: {}", criteria);
+
+        List<ActiveUsersDTO> listNotAssigned = activeUsersService.getNotAssignedActiveUsersOfLadmin();
+
+        return listNotAssigned;
     }
 
     @GetMapping("/active-users/ip/{ip}")

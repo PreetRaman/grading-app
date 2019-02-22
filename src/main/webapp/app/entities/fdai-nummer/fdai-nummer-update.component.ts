@@ -62,10 +62,10 @@ export class FdaiNummerUpdateComponent implements OnInit {
     // }
 
     importCsv(event: any) {
-        this.fdaiNummerService.createImport(this.fdaiNummer.user.login, event.target.files[0]).subscribe((res:any) => {
+        this.fdaiNummerService.createImport(this.fdaiNummer.user.login, event.target.files[0]).subscribe((res: any) => {
             console.log(res);
         });
-        window.history.back();
+        this.onSaveSuccess();
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IFdaiNummer>>) {

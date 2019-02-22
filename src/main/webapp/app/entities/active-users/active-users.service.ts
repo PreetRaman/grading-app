@@ -48,8 +48,16 @@ export class ActiveUsersService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    deleteAll(): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}`, { observe: 'response' });
+    }
+
     getUser(): Observable<any> {
         return this.http.get(`${this.resourceUrl}/ladmin`);
+    }
+
+    getUnassignedUser(): Observable<any> {
+        return this.http.get(`${this.resourceUrl}/notassigned/ladmin`);
     }
 
     sendClientIp(ip: String) {
