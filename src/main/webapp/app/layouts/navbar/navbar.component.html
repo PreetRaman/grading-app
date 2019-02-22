@@ -70,7 +70,7 @@
                             <span jhiTranslate="global.menu.admin.userManagement">User management</span>
                         </a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a class="dropdown-item" routerLink="admin/jhi-metrics" routerLinkActive="active"
                            (click)="collapseNavbar()">
                             <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
@@ -111,7 +111,7 @@
                             <fa-icon icon="book" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.admin.apidocs">API</span>
                         </a>
-                    </li>
+                    </li>-->
                     <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                     <li *ngIf="!inProduction">
                         <a class="dropdown-item" href='./h2-console' target="_tab" (click)="collapseNavbar()">
@@ -136,13 +136,13 @@
                     </li>
                 </ul>
             </li>
-          <li>
-                <a class="dropdown-item" routerLink="register" routerLinkActive="active"
-                   (click)="collapseNavbar()">
-                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
-                    <span jhiTranslate="global.menu.admin.userManagement">User management</span>
-                </a>
-            </li>
+          <!--<li>-->
+                <!--<a class="dropdown-item" routerLink="register" routerLinkActive="active"-->
+                   <!--(click)="collapseNavbar()">-->
+                    <!--<fa-icon icon="user" fixedWidth="true"></fa-icon>-->
+                    <!--<span jhiTranslate="global.menu.admin.userManagement">User management</span>-->
+                <!--</a>-->
+            <!--</li>-->
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <a *ngIf="isAuthenticated()" class="nav-link" (click)="logout()" id="logout">

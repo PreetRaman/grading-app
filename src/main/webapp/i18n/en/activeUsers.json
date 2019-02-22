@@ -2,7 +2,8 @@
     "gradingApp": {
         "activeUsers": {
             "home": {
-                "title": "Active Users",
+                "title": "Active Assigned Students",
+                "unassigned": "Active Un-assigned Students",
                 "createLabel": "Create a new Active Users",
                 "createOrEditLabel": "Create or edit a Active Users"
             },

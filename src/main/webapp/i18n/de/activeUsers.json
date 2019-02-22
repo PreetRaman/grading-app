@@ -2,7 +2,8 @@
     "gradingApp": {
         "activeUsers": {
             "home": {
-                "title": "Active Users",
+                "title": "Aktive Zugewiesene Studenten",
+                "unassigned": "Aktive nicht Zugewiesene Studenten",
                 "createLabel": "Active Users erstellen",
                 "createOrEditLabel": "Active Users erstellen oder bearbeiten"
             },
