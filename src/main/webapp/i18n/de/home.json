@@ -1,6 +1,6 @@
 {
     "home": {
-        "title": "Grading Application[DE]",
+        "title": "Online Exam Submission Application[DE]",
         "subtitle": "Dies ist ein Abschlussprojekt",
         "logged": {
             "message": "Dies ist ein Abschlussprojekt, das die Entwicklung des Automated Grading Systems beschreibt. Das Hauptziel dieses Projekts ist es, die automatische Einstufung der Prüfungen zu ermöglichen, sobald die Schüler ihre Dateien in das System hochgeladen haben. Das Projekt wird mit Springboot realisiert. Das Frontend der Website ist in Angular gestaltet und das Backend wird mit Java entwickelt. Das Frontend ruft das Backend mit der REST-API auf. Zu Testzwecken wird die H2-Datenbank verwendet und für die Entwicklung und endgültige Implementierung wird die SQL-Datenbank verwendet."
