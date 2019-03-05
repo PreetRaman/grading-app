@@ -22,3 +22,8 @@ public interface SubmissionsRepository extends JpaRepository<Submissions, Long> 
 
     List<Submissions> findAllByFdaiNumber(String fdaiNumber);
 }
+
+
+
+
+

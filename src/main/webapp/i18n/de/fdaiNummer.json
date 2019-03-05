@@ -17,7 +17,8 @@
                 "title": "Fdai Nummer"
             },
             "fdainumber": "Fdainumber",
-            "ip": "Wählen Sie die CSV-Datei",
+            "importcsv": "Wählen Sie die CSV-Datei",
+            "ip": "IP",
             "user": "User"
         }
     }

@@ -182,9 +182,7 @@ public class SubmissionsResource {
 
        WriteCsvToResponse.writeSubmissionList(response.getWriter(), listSubmissions);
     }
-
     /*Handle Get request for submissions of particular LADMINS */
-
 
     @Secured({ AuthoritiesConstants.LADMIN, AuthoritiesConstants.ADMIN })
     @GetMapping("/submissions/ladmin")
