@@ -136,13 +136,13 @@
                     </li>
                 </ul>
             </li>
-          <!--<li>-->
-                <!--<a class="dropdown-item" routerLink="register" routerLinkActive="active"-->
-                   <!--(click)="collapseNavbar()">-->
-                    <!--<fa-icon icon="user" fixedWidth="true"></fa-icon>-->
-                    <!--<span jhiTranslate="global.menu.admin.userManagement">User management</span>-->
-                <!--</a>-->
-            <!--</li>-->
+          <li ngbDropdown class="nav-item dropdown pointer">
+                <a class="nav-link" routerLink="register" routerLinkActive="active"
+                   (click)="collapseNavbar()">
+                    <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.register">User management</span>
+                </a>
+            </li>
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <a *ngIf="isAuthenticated()" class="nav-link" (click)="logout()" id="logout">
